@@ -10,7 +10,7 @@ git clone https://github.com/1icolo/dotfiles.git $HOME/.dotfiles --recursive
 
 > :warning: **This will overwrite your current configs!**:  Back them up before cloning this repository.
 
-## The following are the set of programs I like in my system.
+## The following is the set of programs I use daily.
 ---
 - tmux: terminal multiplexer
 - zsh: UNIX shell
