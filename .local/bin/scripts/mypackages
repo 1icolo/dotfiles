@@ -1,0 +1,8 @@
+#!/bin/sh
+
+#comm -23 <(pacman -Qqett | sort) <(pacman -Qqg base-devel | sort | uniq)
+# pacman -Qqe | grep -vx "$(pacman -Qqg base-devel)" | grep -vx "$(pacman -Qqm)"
+echo "PACMAN PACKAGES:"
+pacman -Qqe | grep -vx "$(pacman -Qqg base-devel)" | grep -vx "$(pacman -Qqm)"
+echo "PARU PACKAGES:"
+paru -Qm

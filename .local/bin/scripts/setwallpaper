@@ -1,0 +1,3 @@
+#!/bin/sh
+# feh --no-fehbg --bg-scale "/home/janico/Pictures/Wallpapers/Ivory-steppes/2560x1600.jpg" 
+wal -i "/home/janico/Pictures/Wallpapers/Selected/wallhaven-jxd1x5.jpg"

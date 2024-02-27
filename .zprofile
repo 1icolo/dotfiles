@@ -9,8 +9,8 @@
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 export PATH="/home/janico/.local/bin:$PATH"
-# Adds `~/.local/bin` to $PATH
-#export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
+# Adds `~/.local/bin` to $PATH recursively
+export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 
 
 # Default programs:

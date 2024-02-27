@@ -1,0 +1,3 @@
+#!/bin/sh
+sh ~/.screenlayout/monitor-only.sh
+setwallpaper

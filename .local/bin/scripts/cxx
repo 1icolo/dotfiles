@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Default file
+FILE="solve.cpp"
+
+# Check if a file path was provided
+if [ $# -eq 1 ]; then
+    FILE=$1
+fi
+
+# Check if the file exists
+if [ ! -f $FILE ]; then
+    echo "File $FILE does not exist."
+    exit 1
+fi
+
+# Compile and run the file
+clang++ $FILE -o output -w && ./output

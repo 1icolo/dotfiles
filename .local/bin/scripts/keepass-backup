@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Source and destination directories
+src_dir=~/Documents/Keepass
+dst_dir=/run/media/janico/677D-5788
+
+# Function to check if the destination directory is mounted
+is_dst_mounted() {
+    df --output=target | grep -q "^$dst_dir$"
+}
+
+# Function to sync directories
+sync_dirs() {
+    if is_dst_mounted; then
+        # rsync -av "$src_dir" "$dst_dir"
+        rm -rf "$dst_dir/Keepass"
+        cp -r "$src_dir" "$dst_dir"
+        notify-send -u low "Keepass Back Up" "$dst_dir"
+    else
+        echo "Destination directory is not mounted. Skipping sync."
+    fi
+}
+
+# Initial sync
+sync_dirs
+
+# Watch for changes and sync
+while inotifywait -r -e modify,create,delete "$src_dir"; do
+    sync_dirs
+done
+
