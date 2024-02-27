@@ -1,0 +1,12 @@
+[user]
+	email = gabo.janicolo@gmail.com
+	name = Nico Gabo
+[core]
+	editor = nvim
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
