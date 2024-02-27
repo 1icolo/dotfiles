@@ -136,3 +136,8 @@ alias nvim-old="NVIM_APPNAME='nvim-old' nvim"
 alias cd=z
 eval "$(zoxide init zsh)"
 
+# Start Tmux 
+# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#   exec tmux
+# fi
+
