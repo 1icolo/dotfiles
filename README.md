@@ -1,4 +1,16 @@
-# The following are the set of programs I like in my system.
+# Personal dotfiles
+
+## Installation
+
+Clone this repository recursively to include the submodules.
+
+```
+git clone https://github.com/1icolo/dotfiles.git $HOME/.dotfiles --recursive
+```
+
+> :warning: **This will overwrite your current configs!**:  Back them up before cloning this repository.
+
+## The following are the set of programs I like in my system.
 ---
 - tmux: terminal multiplexer
 - zsh: UNIX shell
