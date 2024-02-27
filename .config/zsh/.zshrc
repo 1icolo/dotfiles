@@ -117,7 +117,7 @@ setopt globdots
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/janico/.config/zsh/zshrc'
+zstyle :compinstall filename '~/.config/zsh/zshrc'
 
 autoload -Uz compinit
 compinit
@@ -126,7 +126,7 @@ compinit
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
 # bun completions
-[ -s "/home/janico/.bun/_bun" ] && source "/home/janico/.bun/_bun"
+[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 
 # SDKMAN!
 # [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
