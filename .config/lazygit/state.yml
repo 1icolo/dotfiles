@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+- /home/janico/.dotfiles
 - /home/janico/.config/nvim
 - /home/janico/Documents/Obsidian
 startuppopupversion: 5
