@@ -1,2 +1,4 @@
+#!/bin/sh
+
 killall -q dwmblocks
 dwmblocks
