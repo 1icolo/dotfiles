@@ -1,3 +1,7 @@
 [submodule "nvim"]
     path = .config/nvim
     url = https://github.com/1icolo/nvim
+
+[submodule "zsh-autosuggestions"]
+    path = .config/zsh/zsh-autosuggestions
+    url = https://github.com/zsh-users/zsh-autosuggestions
