@@ -9,9 +9,8 @@
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 export PATH="/home/janico/.local/bin:$PATH"
+export PATH="/home/janico/.local/bin/scripts:$PATH"
 # Adds `~/.local/bin` to $PATH recursively
-export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
-
 
 # Default programs:
 export EDITOR="nvim"
@@ -73,3 +72,5 @@ setxkbmap -option caps:backspace
 
 # Start graphical server on user's current tty if not already running.
 # [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
+
+
