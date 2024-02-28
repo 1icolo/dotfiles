@@ -55,8 +55,8 @@ eval "$(zoxide init zsh)"
 #   exec tmux
 # fi
 
-source ~/Downloads/powerlevel10k/powerlevel10k.zsh-theme
+source "$ZDOTDIR/powerlevel10k/powerlevel10k.zsh-theme"
 source "$XDG_CONFIG_HOME/shell/aliasrc"
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+[[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
