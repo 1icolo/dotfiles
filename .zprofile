@@ -6,7 +6,6 @@
 # If you don't plan on reverting to bash, you can remove the link in ~/.profile
 # to clean up.
 
-
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 export PATH="/home/janico/.local/bin:$PATH"
 export PATH="/home/janico/.local/bin/scripts:$PATH"
@@ -17,7 +16,8 @@ export EDITOR="nvim"
 export TERMINAL="kitty"
 export TERMINAL_PROG="kitty"
 export BROWSER="firefox"
-export FILE_MANAGER="thunar"
+export GUI_FILE_MANAGER="thunar"
+export FILE_MANAGER="yazi"
 
 # ~/ Clean-up:
 export XDG_CONFIG_HOME="$HOME/.config"

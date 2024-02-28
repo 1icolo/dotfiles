@@ -131,10 +131,8 @@ compinit
 # SDKMAN!
 # [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-alias snvim="sudo -E nvim"
-alias nvim-old="NVIM_APPNAME='nvim-old' nvim"
-alias cd=z
 eval "$(zoxide init zsh)"
+source "$XDG_CONFIG_HOME/shell/aliasrc"
 
 # Start Tmux 
 # if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
