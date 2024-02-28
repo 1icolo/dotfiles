@@ -53,24 +53,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # IntelliJ
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-# Execute startup programs
-exec pipewire &
-exec dwmblocks &
-exec setwallpaper &
-exec picom &
-exec nm-applet &
-exec blueman-applet &
-exec pasystray & 
-exec flameshot &
-# exec keepass-backup
-# exec sclayout-monitor-only &
-
-xinput --set-prop 11 'libinput Accel Profile Enabled' 0, 1
-xinput --set-prop 11 'libinput Accel Speed' 1
-sleep 1 
-setxkbmap -option caps:backspace
-
 # Start graphical server on user's current tty if not already running.
 # [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
-
-
