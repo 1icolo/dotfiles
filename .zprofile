@@ -17,7 +17,7 @@ export TERMINAL="kitty"
 export TERMINAL_PROG="kitty"
 export BROWSER="firefox"
 export GUI_FILE_MANAGER="thunar"
-export FILE_MANAGER="yazi"
+export FILE_MANAGER="ya"
 
 # ~/ Clean-up:
 export XDG_CONFIG_HOME="$HOME/.config"

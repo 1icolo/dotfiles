@@ -38,6 +38,6 @@ alias \
 	ka="killall" \
 	sdn="shutdown -h now" \
 	ed="$EDITOR" \
-    fm="$FILE_MANAGER" \
+	fm="$FILE_MANAGER" \
 	p="pacman" \
     snvim="sudo -E nvim"
