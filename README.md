@@ -5,7 +5,13 @@
 Clone this repository recursively to include the submodules.
 
 ```
-git clone https://github.com/1icolo/dotfiles.git $HOME/.dotfiles --recursive
+git clone https://github.com/1icolo/dotfiles.git $HOME/.dotfiles --recursive && cd $HOME/.dotfiles
+```
+
+Run the `setup.sh` script to create symlinks.
+
+```
+./setup.sh
 ```
 
 > :warning: **This will overwrite your current configs!**:  Back them up before cloning this repository.
