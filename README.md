@@ -40,3 +40,4 @@ Run the `setup.sh` script to create symlinks.
 - feh: image viewer
 - nmtui: network manager UI
 - bluetui: bluetooth manager UI
+- pulsemixer: audio control UI
