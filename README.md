@@ -38,3 +38,5 @@ Run the `setup.sh` script to create symlinks.
 - mpd: music player daemon
 - ncmcpp: music player UI 
 - feh: image viewer
+- nmtui: network manager UI
+- bluetui: bluetooth manager UI
