@@ -218,6 +218,9 @@ return config
 
     pkgs.telegram-desktop
     #pkgs.anki
+    pkgs.iina
+    pkgs.drawio
+    pkgs.brave
 
     pkgs.fastfetch
     pkgs.ffmpeg
@@ -235,20 +238,17 @@ return config
     pkgs.ollama
     pkgs.dos2unix
     pkgs.glow
-    pkgs.iina
-    pkgs.drawio
-    pkgs.brave
 
     pkgs.zellij
+    pkgs.lazygit
 
     pkgsUnstable.neovim
 
     pkgs.opencode
     pkgs.sqlitebrowser
-
     pkgs.aerospace
-    pkgs.obsidian
     pkgs.qbittorrent
     pkgs.zed
+
   ];
 }
