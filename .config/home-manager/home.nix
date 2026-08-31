@@ -244,7 +244,9 @@ return config
 
     pkgsUnstable.neovim
 
-    pkgs.opencode
+    pkgs.grok-cli
+    pkgs.claude-code
+    pkgsUnstable.opencode
     pkgs.sqlitebrowser
     pkgs.aerospace
     pkgs.qbittorrent
