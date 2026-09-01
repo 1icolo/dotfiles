@@ -105,13 +105,15 @@ return config
     vimAlias = true;
     defaultEditor = true;
   };
+  programs.gh = {
+    enable = true;
+  };
 
   home.packages = [
     pkgs.ripgrep
     pkgs.deno
     pkgs.uv
     pkgs.yazi
-    pkgs.gh
     pkgs.lazygit
     pkgsUnstable.opencode
   ];
