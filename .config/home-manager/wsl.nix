@@ -25,20 +25,14 @@ toggle-proxy() {
 }
     '';
     shellAliases = {
-      hm-switch = "git -C ~/.config/home-manager add . && home-manager switch --flake ~/.config/home-manager#nico@x86_64-linux";
-      hm-update = "nix flake update --flake ~/.config/home-manager && hm-switch";
+      hm-switch = "nix run home-manager -- switch --flake ~/.config/home-manager#nico@x86_64-linux -b backup";
+      hm-update = "nix flake update --flake ~/.config/home-manager";
       hm-edit = "vim ~/.config/home-manager/wsl.nix";
       cdwin = "cd /mnt/c/Users/j60126942/";
       agent = "which $(codearts)";
     };
   };
 
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    defaultEditor = true;
-  };
 
   programs.git = {
     enable = true;
