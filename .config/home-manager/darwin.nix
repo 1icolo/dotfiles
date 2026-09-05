@@ -16,7 +16,7 @@ end
   programs.zsh = {
     enable = true;
     shellAliases = {
-      hm-switch = "nix run home-manager -- switch --flake \"$HOME/.config/home-manager#janicogabo@aarch64-darwin\" -b backup";
+      hm-switch = "nix run home-manager -- switch --flake \"$HOME/.config/home-manager#$(whoami)@aarch64-darwin\" -b backup";
       hm-update = "nix flake update --flake ~/.config/home-manager";
       hm-edit = "$EDITOR ~/.config/home-manager/home.nix";
       vi = "nvim";
@@ -44,6 +44,7 @@ end
     pkgs.iina
     pkgs.drawio
     pkgs.brave
+    #pkgs.google-chrome
 
     pkgs.fastfetch
     pkgs.ffmpeg
@@ -60,7 +61,8 @@ end
 
     pkgs.zellij
 
-    pkgsUnstable.neovim
+
+    #pkgsUnstable.neovim
 
     pkgs.grok-cli
     pkgs.claude-code
