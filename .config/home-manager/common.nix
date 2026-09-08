@@ -30,6 +30,9 @@
     enableZshIntegration = true;
     enableFishIntegration = true;
     enableBashIntegration = true;
+    options = [
+      "--no-cmd"
+    ];
   };
 
   programs.wezterm = {
