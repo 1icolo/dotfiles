@@ -19,7 +19,15 @@
   programs.starship= {
     enable = true;
     settings = {
+      add_newline = true;
+      scan_timeout = 10;
       aws = {
+      	disabled = true;
+      };
+      gcloud = {
+      	disabled = true;
+      };
+      azure = {
       	disabled = true;
       };
     };
