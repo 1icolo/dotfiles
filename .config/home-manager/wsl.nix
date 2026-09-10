@@ -34,14 +34,6 @@ toggle-proxy() {
   };
 
 
-  programs.git = {
-    enable = true;
-    settings.user = {
-      name = "Nico Gabo";
-      email = "jan.nico.gabo@h-partners.com";
-    };
-  };
-
   home.packages = [
     pkgsUnstable.herdr
     pkgs.httptap
@@ -51,6 +43,8 @@ toggle-proxy() {
     pkgs.netcat
     pkgs.tree
     pkgs.anki
+    pkgs.nodejs-slim
+    pkgs.terraform
 
     pkgs.nerd-fonts.meslo-lg
 

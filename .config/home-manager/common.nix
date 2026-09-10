@@ -16,7 +16,7 @@
     XDG_STATE_HOME = "$HOME/.local/state";
   };
 
-  programs.starship= {
+  programs.starship = {
     enable = true;
     settings = {
       add_newline = true;
@@ -38,9 +38,6 @@
     enableZshIntegration = true;
     enableFishIntegration = true;
     enableBashIntegration = true;
-    options = [
-      "--no-cmd"
-    ];
   };
 
   programs.wezterm = {
@@ -116,8 +113,20 @@ return config
     vimAlias = true;
     defaultEditor = true;
   };
+  programs.git = {
+    enable = true;
+    settings.user = {
+      name = "Nico Gabo";
+      email = "github.aviation441@silomails.com";
+    };
+  };
   programs.gh = {
     enable = true;
+    gitCredentialHelper.enable = true;
+    gitCredentialHelper.hosts = [
+	"https://github.com"
+	"https://gist.github.com"
+    ];
   };
 
   home.packages = [
