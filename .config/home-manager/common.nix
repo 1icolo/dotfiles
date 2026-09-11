@@ -19,7 +19,7 @@
   programs.starship = {
     enable = true;
     settings = {
-      add_newline = true;
+      add_newline = false;
       scan_timeout = 10;
       aws = {
       	disabled = true;
@@ -38,6 +38,7 @@
     enableZshIntegration = true;
     enableFishIntegration = true;
     enableBashIntegration = true;
+    options = [ "--cmd cd" ];
   };
 
   programs.wezterm = {
