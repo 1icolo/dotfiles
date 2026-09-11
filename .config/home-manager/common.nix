@@ -19,7 +19,7 @@
   programs.starship = {
     enable = true;
     settings = {
-      add_newline = false;
+      add_newline = true;
       scan_timeout = 10;
       aws = {
       	disabled = true;
@@ -133,9 +133,11 @@ return config
   home.packages = [
     pkgs.ripgrep
     pkgs.deno
+    pkgs.bun
     pkgs.uv
     pkgs.yazi
     pkgs.lazygit
     pkgsUnstable.opencode
+    pkgs.fastfetch
   ];
 }
