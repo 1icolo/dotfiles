@@ -6,6 +6,8 @@
 
   home.sessionPath = [
     "$HOME/.nix-profile/bin"
+    "$HOME/.local/bin"
+    "$HOME/.deno/bin"
   ];
 
   home.sessionVariables = {
