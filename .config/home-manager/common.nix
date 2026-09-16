@@ -18,19 +18,26 @@
     XDG_STATE_HOME = "$HOME/.local/state";
   };
 
+  programs.yazi = {
+    enable = true;
+    extraPackages = with pkgs; [
+      glow
+    ];
+  };
+
   programs.starship = {
     enable = true;
     settings = {
       add_newline = true;
       scan_timeout = 10;
       aws = {
-      	disabled = true;
+        disabled = true;
       };
       gcloud = {
-      	disabled = true;
+        disabled = true;
       };
       azure = {
-      	disabled = true;
+        disabled = true;
       };
     };
   };
@@ -48,65 +55,65 @@
     enableZshIntegration = true;
     enableBashIntegration = true;
     extraConfig = ''
-local act = wezterm.action
-local config = wezterm.config_builder()
+      local act = wezterm.action
+      local config = wezterm.config_builder()
 
-use_fancy_tab_bar = true
+      use_fancy_tab_bar = true
 
-config.window_background_opacity = 0.88
-config.macos_window_background_blur = 25
-config.font = wezterm.font 'Menlo'
-config.font_size = 16
+      config.window_background_opacity = 0.88
+      config.macos_window_background_blur = 25
+      config.font = wezterm.font 'Menlo'
+      config.font_size = 16
 
-config.window_decorations = "RESIZE"
-config.native_macos_fullscreen_mode = true
-config.hide_tab_bar_if_only_one_tab = true
-config.macos_window_background_blur = 20
+      config.window_decorations = "RESIZE"
+      config.native_macos_fullscreen_mode = true
+      config.hide_tab_bar_if_only_one_tab = true
+      config.macos_window_background_blur = 20
 
-config.keys = {
-  { key = 'V', mods = 'SUPER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
-  { key = 'S', mods = 'SUPER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+      config.keys = {
+        { key = 'V', mods = 'SUPER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+        { key = 'S', mods = 'SUPER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
 
-  { key = 'h', mods = 'SUPER', action = act.ActivatePaneDirection 'Left' },
-  { key = 'j', mods = 'SUPER', action = act.ActivatePaneDirection 'Down' },
-  { key = 'k', mods = 'SUPER', action = act.ActivatePaneDirection 'Up' },
-  { key = 'l', mods = 'SUPER', action = act.ActivatePaneDirection 'Right' },
+        { key = 'h', mods = 'SUPER', action = act.ActivatePaneDirection 'Left' },
+        { key = 'j', mods = 'SUPER', action = act.ActivatePaneDirection 'Down' },
+        { key = 'k', mods = 'SUPER', action = act.ActivatePaneDirection 'Up' },
+        { key = 'l', mods = 'SUPER', action = act.ActivatePaneDirection 'Right' },
 
-  { key = 'h', mods = 'SUPER|CTRL', action = act.AdjustPaneSize { 'Left', 5 } },
-  { key = 'j', mods = 'SUPER|CTRL', action = act.AdjustPaneSize { 'Down', 5 } },
-  { key = 'k', mods = 'SUPER|CTRL', action = act.AdjustPaneSize { 'Up', 5 } },
-  { key = 'l', mods = 'SUPER|CTRL', action = act.AdjustPaneSize { 'Right', 5 } },
+        { key = 'h', mods = 'SUPER|CTRL', action = act.AdjustPaneSize { 'Left', 5 } },
+        { key = 'j', mods = 'SUPER|CTRL', action = act.AdjustPaneSize { 'Down', 5 } },
+        { key = 'k', mods = 'SUPER|CTRL', action = act.AdjustPaneSize { 'Up', 5 } },
+        { key = 'l', mods = 'SUPER|CTRL', action = act.AdjustPaneSize { 'Right', 5 } },
 
-  { key = 'c', mods = 'SUPER|SHIFT', action = act.CloseCurrentPane { confirm = true } },
+        { key = 'c', mods = 'SUPER|SHIFT', action = act.CloseCurrentPane { confirm = true } },
 
-  { key = 't', mods = 'SUPER', action = act.SpawnTab 'CurrentPaneDomain' },
-  { key = 'w', mods = 'SUPER|SHIFT', action = act.CloseCurrentTab { confirm = true } },
+        { key = 't', mods = 'SUPER', action = act.SpawnTab 'CurrentPaneDomain' },
+        { key = 'w', mods = 'SUPER|SHIFT', action = act.CloseCurrentTab { confirm = true } },
 
-  { key = '1', mods = 'SUPER', action = act.ActivateTab(0) },
-  { key = '2', mods = 'SUPER', action = act.ActivateTab(1) },
-  { key = '3', mods = 'SUPER', action = act.ActivateTab(2) },
-  { key = '4', mods = 'SUPER', action = act.ActivateTab(3) },
-  { key = '5', mods = 'SUPER', action = act.ActivateTab(4) },
-  { key = '6', mods = 'SUPER', action = act.ActivateTab(5) },
-  { key = '7', mods = 'SUPER', action = act.ActivateTab(6) },
-  { key = '8', mods = 'SUPER', action = act.ActivateTab(7) },
-  { key = '9', mods = 'SUPER', action = act.ActivateTab(8) },
+        { key = '1', mods = 'SUPER', action = act.ActivateTab(0) },
+        { key = '2', mods = 'SUPER', action = act.ActivateTab(1) },
+        { key = '3', mods = 'SUPER', action = act.ActivateTab(2) },
+        { key = '4', mods = 'SUPER', action = act.ActivateTab(3) },
+        { key = '5', mods = 'SUPER', action = act.ActivateTab(4) },
+        { key = '6', mods = 'SUPER', action = act.ActivateTab(5) },
+        { key = '7', mods = 'SUPER', action = act.ActivateTab(6) },
+        { key = '8', mods = 'SUPER', action = act.ActivateTab(7) },
+        { key = '9', mods = 'SUPER', action = act.ActivateTab(8) },
 
-  { key = 'f', mods = 'SUPER', action = act.ToggleFullScreen },
+        { key = 'f', mods = 'SUPER', action = act.ToggleFullScreen },
 
-  { key = 'r', mods = 'SUPER|SHIFT', action = act.ReloadConfiguration },
-}
+        { key = 'r', mods = 'SUPER|SHIFT', action = act.ReloadConfiguration },
+      }
 
-config.leader = { key = 'a', mods = 'SUPER', timeout_milliseconds = 1000 }
-config.key_tables = {
-  leader = {
-    { key = 's', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
-    { key = 'v', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
-    { key = 'q', action = act.CloseCurrentPane { confirm = true } },
-  },
-}
+      config.leader = { key = 'a', mods = 'SUPER', timeout_milliseconds = 1000 }
+      config.key_tables = {
+        leader = {
+          { key = 's', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+          { key = 'v', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+          { key = 'q', action = act.CloseCurrentPane { confirm = true } },
+        },
+      }
 
-return config
+      return config
     '';
   };
 
@@ -115,6 +122,42 @@ return config
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
+    extraPackages = with pkgs; [ ripgrep ];
+    plugins = with pkgs.vimPlugins; [
+      { plugin = onedark-vim; }
+      { plugin = markview-nvim; }
+      {
+        plugin = telescope-nvim;
+        type = "lua";
+        config = ''
+          local builtin = require("telescope.builtin")
+          vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
+          vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+        '';
+      }
+      {
+        plugin = which-key-nvim;
+        type = "lua";
+        config = ''
+	  local wk = require("which-key")
+          wk.setup({})
+	  wk.add({
+            { "<leader>", group = "Leader" },
+            { "<leader>m", group = "Markdown" },
+            { "<leader>f", group = "File" },
+          })
+        '';
+      }
+
+    ];
+    initLua = ''
+      vim.g.mapleader = " "
+      vim.opt.number = true
+      vim.opt.relativenumber = true
+      vim.opt.ignorecase = true
+      vim.opt.smartcase = true
+      vim.opt.clipboard = "unnamedplus"
+    '';
   };
   programs.git = {
     enable = true;
@@ -127,8 +170,8 @@ return config
     enable = true;
     gitCredentialHelper.enable = true;
     gitCredentialHelper.hosts = [
-	"https://github.com"
-	"https://gist.github.com"
+      "https://github.com"
+      "https://gist.github.com"
     ];
   };
 
@@ -137,9 +180,11 @@ return config
     pkgs.deno
     pkgs.bun
     pkgs.uv
-    pkgs.yazi
     pkgs.lazygit
     pkgsUnstable.opencode
     pkgs.fastfetch
+    pkgs.glow
+
+    pkgs.playwright
   ];
 }

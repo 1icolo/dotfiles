@@ -46,6 +46,9 @@ toggle-proxy() {
     pkgs.nodejs-slim
     pkgs.terraform
 
+    pkgs.kubectl
+    pkgs.k9s
+
     pkgs.nerd-fonts.meslo-lg
 
     pkgsUnstable.jq
