@@ -126,6 +126,8 @@
     plugins = with pkgs.vimPlugins; [
       { plugin = onedark-vim; }
       { plugin = markview-nvim; }
+      { plugin = markdown-preview-nvim; }
+      { plugin = nvim-treesitter.withAllGrammars; }
       {
         plugin = telescope-nvim;
         type = "lua";
@@ -151,6 +153,8 @@
 
     ];
     initLua = ''
+      vim.opt.termguicolors = true   
+      vim.cmd("colorscheme onedark")
       vim.g.mapleader = " "
       vim.opt.number = true
       vim.opt.relativenumber = true
