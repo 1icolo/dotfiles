@@ -155,7 +155,6 @@ return config
     extraPackages = with pkgs; [ ripgrep ];
     plugins = with pkgs.vimPlugins; [
       { plugin = onedark-vim; }
-      { plugin = markview-nvim; }
       { plugin = markdown-preview-nvim; }
       { plugin = nvim-treesitter.withAllGrammars; }
       {
@@ -218,6 +217,8 @@ return config
     pkgsUnstable.opencode
     pkgs.fastfetch
     pkgs.glow
+    pkgs.bat
+    pkgs.pv
 
     pkgs.playwright
   ];
