@@ -1,12 +1,13 @@
 { pkgs, pkgsUnstable, ... }:
 
 {
-  programs.bash = {
+  programs.zsh = {
     enable = true;
-    initExtra = ''
+    initContent = ''
+printf '\e]7;file://%s%s\a' "$HOSTNAME" "$PWD"
 export HOMEW="/mnt/c/Users/j60126942"
-export EDITOR=vim
-export PATH=$PATH:/home/nico/.codeartsdoer/installers/bin
+export DOWNLOADS_WELINK="C:\Users\j60126942\AppData\Roaming\WeLink_Desktop\appdata\IM\j60126942\DownloadFiles"
+export DOWNLOADS_WINDOWS="C:\Users\j60126942\AppData\Roaming\WeLink_Desktop\appdata\IM\j60126942\DownloadFiles"
 
 toggle-proxy() {
   if [[ $(env | grep proxy) ]]; then
@@ -27,12 +28,18 @@ toggle-proxy() {
     shellAliases = {
       hm-switch = "nix run home-manager -- switch --flake ~/.config/home-manager#nico@x86_64-linux -b backup";
       hm-update = "nix flake update --flake ~/.config/home-manager";
-      hm-edit = "vim ~/.config/home-manager/wsl.nix";
+      hm-edit = "vim ~/.config/home-manager";
       cdwin = "cd /mnt/c/Users/j60126942/";
       agent = "which $(codearts)";
     };
   };
-
+  home.sessionPath = [
+    "$HOME/.nix-profile/bin"
+    "$HOME/.local/bin"
+    "$HOME/.deno/bin"
+    "$HOME/.codeartsdoer/installers/bin"
+    "$HOME/OCHOME"
+  ];
 
   home.packages = [
     pkgsUnstable.herdr

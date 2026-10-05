@@ -1,14 +1,11 @@
 { pkgs, pkgsUnstable, ... }:
 
+let
+  notesDir = "$HOME/work";
+in
 {
   nixpkgs.config.allowUnfree = true;
   home.stateVersion = "26.05";
-
-  home.sessionPath = [
-    "$HOME/.nix-profile/bin"
-    "$HOME/.local/bin"
-    "$HOME/.deno/bin"
-  ];
 
   home.sessionVariables = {
     EDITOR = "nvim";
@@ -16,12 +13,14 @@
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
+    NOTES_DIR = notesDir;
   };
 
   programs.yazi = {
     enable = true;
     extraPackages = with pkgs; [
       glow
+      xleak
     ];
   };
 
@@ -29,7 +28,7 @@
     enable = true;
     settings = {
       add_newline = true;
-      scan_timeout = 10;
+      scan_timeout = 3000;
       aws = {
         disabled = true;
       };
@@ -152,7 +151,15 @@ return config
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
-    extraPackages = with pkgs; [ ripgrep ];
+    extraPackages = with pkgs; [ 
+      ripgrep 
+      nil
+      nixd
+      lua-language-server
+      tailwindcss-language-server
+      markdown-oxide
+      ruff
+    ];
     plugins = with pkgs.vimPlugins; [
       { plugin = onedark-vim; }
       { plugin = markdown-preview-nvim; }
@@ -176,6 +183,7 @@ return config
             { "<leader>", group = "Leader" },
             { "<leader>m", group = "Markdown" },
             { "<leader>f", group = "File" },
+            { "<leader>c", group = "Changelog" },
           })
         '';
       }
@@ -190,7 +198,51 @@ return config
       vim.opt.ignorecase = true
       vim.opt.smartcase = true
       vim.opt.clipboard = "unnamedplus"
-    '';
+      vim.opt.autochdir = true   
+
+      vim.api.nvim_create_user_command('Cq', function(opts)
+        local notes_dir = vim.env.NOTES_DIR or '${notesDir}'
+        local changelog = notes_dir .. '/CHANGELOG.md'
+        local project = table.concat(opts.fargs, ' ')
+        if project == ''' then project = nil end
+        if project then
+          vim.fn.execute(string.format('silent! vimgrep /- \\[ \\].*\\[\\[%s\\]\\]/ %s', project, changelog))
+        else
+          vim.fn.execute(string.format('silent! vimgrep /- \\[ \\]/ %s', changelog))
+        end
+        if #vim.fn.getqflist() == 0 then
+          print(project and ('No open actionables for ' .. project) or 'No open actionables')
+        else
+          vim.fn.execute('copen')
+        end
+      end, { nargs = '*', complete = function()
+        local notes_dir = vim.env.NOTES_DIR or '${notesDir}'
+        local lines = vim.fn.readfile(notes_dir .. '/CHANGELOG.md')
+        local projects, seen = {}, {}
+        for _, line in ipairs(lines) do
+          for p in line:gmatch('%[%[([^%]]+)%]%]') do
+            if not seen[p] then seen[p] = true; table.insert(projects, p) end
+          end
+        end
+        return projects
+      end })
+
+      -- Keymaps
+      vim.keymap.set('n', '<leader>cq', ':Cq ', { desc = 'Changelog Actionables' })
+      vim.keymap.set('n', '<leader><leader>', 'sx<Esc>', { desc = 'Mark Checkbox', remap = true })
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+      
+      -- LSP
+      vim.lsp.config('markdown_oxide', {
+        cmd = { 'markdown-oxide' },
+        filetypes = { 'markdown' },
+        root_markers = { '.git', '.obsidian', '.moxide.toml' },
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('markdown_oxide')
+      '';
   };
   programs.git = {
     enable = true;
@@ -214,6 +266,7 @@ return config
     pkgs.bun
     pkgs.uv
     pkgs.lazygit
+    pkgs.git-lfs
     pkgsUnstable.opencode
     pkgs.fastfetch
     pkgs.glow
