@@ -155,10 +155,13 @@ return config
       ripgrep 
       nil
       nixd
+      rust-analyzer
       lua-language-server
       tailwindcss-language-server
+      typescript-language-server
       markdown-oxide
       ruff
+      git
     ];
     plugins = with pkgs.vimPlugins; [
       { plugin = onedark-vim; }
@@ -200,6 +203,21 @@ return config
       vim.opt.clipboard = "unnamedplus"
       vim.opt.autochdir = true   
 
+      vim.o.autocomplete = true
+      vim.o.complete = "o,.,w,b"
+      
+      -- Configure popup menu behavior
+      vim.o.completeopt = "fuzzy,menuone,noselect,popup"
+      
+      -- Don't show the "match x of y" messages to keep things clean
+      vim.opt.shortmess:append("c")
+
+      vim.diagnostic.config({
+        virtual_text = true, -- set to false to hide inline text
+        signs = true,
+        update_in_insert = false,
+      })
+
       vim.api.nvim_create_user_command('Cq', function(opts)
         local notes_dir = vim.env.NOTES_DIR or '${notesDir}'
         local changelog = notes_dir .. '/CHANGELOG.md'
@@ -235,13 +253,53 @@ return config
       capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
       
       -- LSP
-      vim.lsp.config('markdown_oxide', {
+      vim.lsp.config('markdown', {
         cmd = { 'markdown-oxide' },
         filetypes = { 'markdown' },
         root_markers = { '.git', '.obsidian', '.moxide.toml' },
         capabilities = capabilities,
       })
-      vim.lsp.enable('markdown_oxide')
+      vim.lsp.enable('markdown')
+
+      vim.lsp.config('rust', {
+        cmd = { 'rust-analyzer' },
+        filetypes = { 'rust' },
+        root_markers = { '.git'  },
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('rust')
+
+      vim.lsp.config('nix', {
+        cmd = { 'nil' },
+        filetypes = { 'nix' },
+        root_markers = { '.git', 'flake.nix', 'flake.lock' },
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('nix')
+
+      vim.lsp.config('lua', {
+        cmd = { 'lua-language-server' },
+        filetypes = { 'lua' },
+        root_markers = { '.git', '.lua' },
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('lua')
+
+      vim.lsp.config('python', {
+        cmd = { 'ruff' },
+        filetypes = { 'python' },
+        root_markers = { '.git', 'pyproject.toml' },
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('python')
+
+      vim.lsp.config('typescript', {
+        cmd = { 'typescript-language-server' },
+        filetypes = { 'typescript', 'typescriptreact' },
+        root_markers = { '.git', '.ts', 'package.json' },
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('typescript')
       '';
   };
   programs.git = {
@@ -261,7 +319,6 @@ return config
   };
 
   home.packages = [
-    pkgs.ripgrep
     pkgs.deno
     pkgs.bun
     pkgs.uv
