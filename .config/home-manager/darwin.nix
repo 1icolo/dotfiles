@@ -37,7 +37,10 @@
     pkgs.nmap
     pkgs.p7zip
     pkgs.podman
-    pkgs.rustup
+
+    pkgs.rustc
+    pkgs.cargo
+    
     pkgs.unrar
     pkgs.dos2unix
     pkgs.glow

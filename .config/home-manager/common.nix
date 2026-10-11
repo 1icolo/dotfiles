@@ -264,7 +264,7 @@ return config
       vim.lsp.config('rust', {
         cmd = { 'rust-analyzer' },
         filetypes = { 'rust' },
-        root_markers = { '.git'  },
+        root_markers = { '.git', 'Cargo.toml'  },
         capabilities = capabilities,
       })
       vim.lsp.enable('rust')
@@ -278,7 +278,7 @@ return config
       vim.lsp.enable('nix')
 
       vim.lsp.config('lua', {
-        cmd = { 'lua-language-server' },
+        cmd = { 'luals' },
         filetypes = { 'lua' },
         root_markers = { '.git', '.lua' },
         capabilities = capabilities,
@@ -319,6 +319,7 @@ return config
   };
 
   home.packages = [
+    pkgs.ripgrep
     pkgs.deno
     pkgs.bun
     pkgs.uv
