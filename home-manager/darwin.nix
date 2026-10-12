@@ -16,10 +16,9 @@
   };
   programs.zed-editor = {
     enable = true;
-    zed-editor.defaultEditor = true;
-    userSettings = builtins.readFile ../zed/settings.json;
-    userKeymaps = builtins.readFile ../zed/keymap.json;
-    userTasks = builtins.readFile ../zed/tasks.json;
+    userSettings = builtins.fromJSON (builtins.readFile ../zed/settings.json);
+    userKeymaps = builtins.fromJSON (builtins.readFile ../zed/keymap.json);
+    userTasks = builtins.fromJSON (builtins.readFile ../zed/tasks.json);
     mutableUserSettings = true;
     mutableUserKeymaps = true;
     mutableUserTasks = true;

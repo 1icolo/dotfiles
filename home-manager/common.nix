@@ -8,7 +8,6 @@ in
   home.stateVersion = "26.05";
 
   home.sessionVariables = {
-    EDITOR = "nvim";
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_DATA_HOME = "$HOME/.local/share";

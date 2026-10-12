@@ -1,25 +1,17 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
   "auto_update": false,
   "outline_panel": {
-    "dock": "right",
+    "dock": "right"
   },
   "collaboration_panel": {
-    "dock": "right",
+    "dock": "right"
   },
   "restore_on_startup": "launchpad",
   "session": {
-    "trust_all_worktrees": true,
+    "trust_all_worktrees": true
   },
   "git_panel": {
-    "dock": "right",
+    "dock": "right"
   },
   "relative_line_numbers": "enabled",
   "ui_font_weight": 400.0,
@@ -27,56 +19,56 @@
   "icon_theme": {
     "mode": "dark",
     "light": "Zed (Default)",
-    "dark": "Zed (Default)",
+    "dark": "Zed (Default)"
   },
   "colorize_brackets": true,
   "soft_wrap": "editor_width",
   "tab_size": 2,
   "pane_split_direction_vertical": "right",
   "preview_tabs": {
-    "enable_preview_from_file_finder": true,
+    "enable_preview_from_file_finder": true
   },
   "tab_bar": {
     "show_tab_bar_buttons": false,
-    "show_nav_history_buttons": false,
+    "show_nav_history_buttons": false
   },
   "tabs": {
     "file_icons": false,
-    "git_status": true,
+    "git_status": true
   },
   "title_bar": {
     "show_branch_status_icon": true,
-    "show_menus": false,
+    "show_menus": false
   },
   "terminal": {
-    "shell": "system",
+    "shell": "system"
   },
   "calls": {
-    "mute_on_join": true,
+    "mute_on_join": true
   },
   "agent_servers": {
     "Kiro": {
       "command": "kiro-cli",
       "args": ["acp"],
-      "type": "custom",
+      "type": "custom"
     },
     "opencode": {
       "favorite_config_option_values": {
-        "model": ["ollama/qwen3.6"],
+        "model": ["ollama/qwen3.6"]
       },
-      "type": "registry",
+      "type": "registry"
     },
     "cursor": {
-      "type": "registry",
-    },
+      "type": "registry"
+    }
   },
   "agent": {
     "dock": "left",
-    "model_parameters": [],
+    "model_parameters": []
   },
   "context_servers": {},
   "project_panel": {
-    "dock": "right",
+    "dock": "right"
   },
   "confirm_quit": true,
   "base_keymap": "VSCode",
@@ -87,6 +79,6 @@
   "theme": {
     "mode": "dark",
     "light": "Dawnfox - blurred",
-    "dark": "Kanagawa Wave Blur",
-  },
+    "dark": "Kanagawa Wave Blur"
+  }
 }
