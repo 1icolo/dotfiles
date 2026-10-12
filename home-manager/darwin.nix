@@ -14,7 +14,19 @@
       fi
     '';
   };
-
+  programs.zed-editor = {
+    enable = true;
+    zed-editor.defaultEditor = true;
+    userSettings = builtins.readFile ../zed/settings.json;
+    userKeymaps = builtins.readFile ../zed/keymap.json;
+    userTasks = builtins.readFile ../zed/tasks.json;
+    mutableUserSettings = true;
+    mutableUserKeymaps = true;
+    mutableUserTasks = true;
+    extraPackages = [
+      pkgs.ripgrep
+    ];
+  };
   home.packages = [
     pkgs.nix-diff
     pkgs.awscli2
@@ -52,7 +64,6 @@
     pkgs.sqlitebrowser
     pkgs.aerospace
     pkgs.qbittorrent
-    pkgs.zed
     pkgs.ollama
   ];
 }
