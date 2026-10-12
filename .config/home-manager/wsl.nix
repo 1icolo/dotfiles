@@ -26,7 +26,7 @@ toggle-proxy() {
 }
     '';
     shellAliases = {
-      hm-switch = "nix run home-manager -- switch --flake ~/.config/home-manager#whoami@x86_64-linux -b backup";
+      hm-switch = "nix run home-manager -- switch --flake ~/.config/home-manager#$(whoami)@x86_64-linux -b backup";
       hm-update = "nix flake update --flake ~/.config/home-manager";
       hm-edit = "vim ~/.config/home-manager";
       cdwin = "cd /mnt/c/Users/j60126942/";
