@@ -63,8 +63,8 @@ in
     defaultEditor = true;
     extraPackages = with pkgs; [ 
       ripgrep 
-      nil
       fd
+      nil
       nixd
       rust-analyzer
       lua-language-server
@@ -80,7 +80,7 @@ in
       { plugin = gitsigns-nvim; }
       { plugin = markdown-preview-nvim; }
       { plugin = nvim-treesitter.withAllGrammars; }
-      { plugin = plenary-nvim; }
+      # { plugin = plenary-nvim; }
       {
         plugin = telescope-nvim;
         type = "lua";
@@ -113,8 +113,8 @@ in
   programs.git = {
     enable = true;
     settings.user = {
-      name = "Nico Gabo";
-      email = "github.aviation441@silomails.com";
+      name = "nicolo";
+      email = "git.noreply.ultimate450@passmail.com";
     };
   };
   programs.gh = {
@@ -128,6 +128,8 @@ in
 
   home.packages = [
     pkgs.ripgrep
+    pkgs.fd
+    pkgs.nvimpager
     pkgs.deno
     pkgs.bun
     pkgs.uv
