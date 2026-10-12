@@ -53,7 +53,7 @@ in
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
-    extraConfig = builtins.readFile ./config/wezterm/wezterm.lua;
+    extraConfig = builtins.readFile ../wezterm/wezterm.lua;
   };
 
   programs.neovim = {
@@ -80,7 +80,6 @@ in
       { plugin = gitsigns-nvim; }
       { plugin = markdown-preview-nvim; }
       { plugin = nvim-treesitter.withAllGrammars; }
-      # { plugin = plenary-nvim; }
       {
         plugin = telescope-nvim;
         type = "lua";
@@ -108,7 +107,7 @@ in
       }
 
     ];
-    initLua = builtins.readFile ./config/nvim/init.lua;
+    initLua = builtins.readFile ../nvim/init.lua;
   };
   programs.git = {
     enable = true;
