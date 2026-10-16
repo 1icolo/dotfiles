@@ -26,7 +26,7 @@ toggle-proxy() {
 }
     '';
     shellAliases = {
-      hm-switch = "nix run home-manager -- switch --flake ~/.config/home-manager#$(whoami)@x86_64-linux -b backup --impure";
+      hm-switch = "home-manager switch --flake ~/.config/home-manager#$(whoami)@x86_64-linux -b backup --impure";
       hm-update = "nix flake update --flake ~/.config/home-manager";
       hm-edit = "vim ~/.config/home-manager";
       cdwin = "cd /mnt/c/Users/j60126942/";
@@ -52,6 +52,9 @@ toggle-proxy() {
     pkgs.anki
     pkgs.nodejs-slim
     pkgs.terraform
+
+    pkgs.rustc
+    pkgs.cargo
 
     pkgs.kubectl
     pkgs.k9s

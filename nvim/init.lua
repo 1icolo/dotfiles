@@ -1,5 +1,5 @@
-vim.opt.termguicolors = true
-vim.cmd("colorscheme onedark")
+vim.opt.termguicolors = false
+-- vim.cmd("colorscheme onedark")
 vim.g.mapleader = " "
 vim.opt.number = true
 vim.opt.relativenumber = true
