@@ -60,8 +60,8 @@ in
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
-    extraPackages = with pkgs; [ 
-      ripgrep 
+    extraPackages = with pkgs; [
+      ripgrep
       fd
       nil
       nixd
@@ -94,14 +94,15 @@ in
         plugin = which-key-nvim;
         type = "lua";
         config = ''
-	  local wk = require("which-key")
-          wk.setup({})
-	  wk.add({
-            { "<leader>", group = "Leader" },
-            { "<leader>m", group = "Markdown" },
-            { "<leader>f", group = "File" },
-            { "<leader>c", group = "Changelog" },
-          })
+          	  local wk = require("which-key")
+                    wk.setup({})
+          	  wk.add({
+                      { "<leader>", group = "Leader" },
+                      { "<leader>m", group = "Markdown" },
+                      { "<leader>n", group = "Notes" },
+                      { "<leader>f", group = "File" },
+                      { "<leader>c", group = "Changelog" },
+                    })
         '';
       }
 
