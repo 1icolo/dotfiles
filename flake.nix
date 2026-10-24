@@ -49,7 +49,8 @@
         inherit nixpkgs inputs;
       };
       mkHome = import ./lib/mkhome.nix {
-        inherit nixpkgs inputs;
+        nixpkgs = { config = { allowUnfree = true; }; };
+        inherit inputs;
       };
     in
     {

@@ -20,15 +20,20 @@ let
   userOSConfig = ../users/${user}/${if darwin then "darwin" else "nixos"}.nix;
   userHMConfig = ../users/${user}/home-manager.nix;
 
-  systemFunc = if darwin then inputs.darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
+  # Create nixpkgs instance with allowUnfree = true
+  pkgs = import nixpkgs {
+    config = { allowUnfree = true; };
+    inherit system;
+  };
+
+  systemFunc = if darwin then inputs.darwin.lib.darwinSystem else pkgs.lib.nixosSystem;
   home-manager =
     if darwin then inputs.home-manager.darwinModules else inputs.home-manager.nixosModules;
-  inherit (nixpkgs.lib) optionals;
+  inherit (pkgs.lib) optionals;
 in
 systemFunc rec {
   inherit system;
   modules = [
-    { nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "unrar" ]; }
 
   ]
   ++ optionals isWSL [
@@ -48,7 +53,7 @@ systemFunc rec {
     userOSConfig
     home-manager.home-manager
     {
-      home-manager.useGlobalPkgs = true;
+      home-manager.useGlobalPkgs = false;
       home-manager.useUserPackages = true;
       home-manager.users.${systemUser} = import userHMConfig {
         inherit inputs;
