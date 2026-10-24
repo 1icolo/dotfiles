@@ -1,6 +1,5 @@
 {
   nixpkgs,
-  overlays,
   inputs,
 }:
 
@@ -29,8 +28,7 @@ in
 systemFunc rec {
   inherit system;
   modules = [
-    { nixpkgs.overlays = overlays; }
-    { nixpkgs.config.allowUnfree = true; }
+    { nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "unrar" ]; }
 
   ]
   ++ optionals isWSL [
@@ -53,8 +51,8 @@ systemFunc rec {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${systemUser} = import userHMConfig {
+        inherit inputs;
         isWSL = isWSL;
-        inputs = inputs;
         currentSystemName = name;
       };
     }

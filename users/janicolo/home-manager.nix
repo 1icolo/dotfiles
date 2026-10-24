@@ -16,6 +16,10 @@ let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
   notesDir = "$HOME/work";
+  unstable = import inputs.nixpkgs-unstable {
+    inherit (pkgs.stdenv.hostPlatform) system;
+    config.allowUnfree = true;
+  };
 in
 {
   imports = lib.optionals (!isStandalone) [ inputs.direnv-instant.homeModules.direnv-instant ];
@@ -199,7 +203,7 @@ in
       uv
       lazygit
       git-lfs
-      opencode
+      unstable.opencode
       fastfetch
       glow
       bat
