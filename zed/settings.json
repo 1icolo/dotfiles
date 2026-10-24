@@ -49,12 +49,16 @@
   "agent_servers": {
     "Kiro": {
       "command": "kiro-cli",
-      "args": ["acp"],
+      "args": [
+        "acp"
+      ],
       "type": "custom"
     },
     "opencode": {
       "favorite_config_option_values": {
-        "model": ["ollama/qwen3.6"]
+        "model": [
+          "ollama/qwen3.6"
+        ]
       },
       "type": "registry"
     },

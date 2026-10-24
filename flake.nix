@@ -40,15 +40,11 @@
 			inherit overlays nixpkgs inputs;
 		};
 		in {
-      nixosConfigurations.vm-aarch64 = mkSystem "vm-aarch64" {
-        system = "aarch64-linux";
-        user   = "mitchellh";
-      };
       nixosConfigurations.vm-aarch64-utm = mkSystem "vm-aarch64-utm" {
         system = "aarch64-linux";
         user   = "mitchellh";
       };
-      linuxConfigurations.wsl = mkSystem "wsl" {
+      linuxConfigurations.wsl = mkSystem "linux-wsl" {
         system = "x86_64-linux";
         user   = "nico";
 				wsl = true;

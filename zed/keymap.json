@@ -1,12 +1,10 @@
 [
   {
-    "context": "Workspace",
-    "bindings": {
-    }
+    "context": "Editor && vim_mode == insert",
+    "bindings": {}
   },
   {
-    "context": "Editor && vim_mode == insert",
-    "bindings": {
-    }
+    "context": "Workspace",
+    "bindings": {}
   }
 ]

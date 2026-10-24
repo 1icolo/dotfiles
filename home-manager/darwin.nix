@@ -4,7 +4,7 @@
   programs.zsh = {
     enable = true;
     shellAliases = {
-      hm-switch = "nix run home-manager -- switch --flake \"$HOME/.config/home-manager#$(whoami)@aarch64-darwin\" -b backup";
+      hm-switch = "home-manager switch --flake \"$HOME/.config/home-manager#$(whoami)@aarch64-darwin\" --option fallback true -b backup";
       hm-update = "nix flake update --flake ~/.config/home-manager";
       hm-edit = "$EDITOR ~/.config/home-manager";
     };
@@ -38,7 +38,6 @@
     pkgs.telegram-desktop
     pkgs.iina
     pkgs.drawio
-    pkgs.brave
 
     pkgs.fastfetch
     pkgs.ffmpeg
@@ -51,7 +50,7 @@
 
     pkgs.rustc
     pkgs.cargo
-    
+
     pkgs.unrar
     pkgs.dos2unix
     pkgs.glow
