@@ -60,7 +60,8 @@
       };
       darwinConfigurations.macbook-pro-m1 = mkSystem "macbook-pro-m1" {
         system = "aarch64-darwin";
-        user = "janicogabo";
+        user = "janicolo";
+        systemUser = "janicogabo";
         darwin = true;
       };
       homeConfigurations."janicolo@x86_64-linux" = mkHome "janicolo" {

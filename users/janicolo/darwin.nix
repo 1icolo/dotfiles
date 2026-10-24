@@ -8,6 +8,7 @@
 }:
 {
   # Darwin-specific configuration
+  system.stateVersion = 7;
   system.defaults.dock = {
     autohide = true;
     tilesize = 36;

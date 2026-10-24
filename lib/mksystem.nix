@@ -8,6 +8,7 @@ name:
 {
   system,
   user,
+  systemUser ? user,
   darwin ? false,
   wsl ? false,
 }:
@@ -51,7 +52,7 @@ systemFunc rec {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.users.${user} = import userHMConfig {
+      home-manager.users.${systemUser} = import userHMConfig {
         isWSL = isWSL;
         inputs = inputs;
         currentSystemName = name;

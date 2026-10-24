@@ -114,7 +114,7 @@ check-all:
 cache:
 	nix build '.#nixosConfigurations.work-wsl.config.system.build.toplevel' --json \
 		| jq -r '.[].outputs | to_entries[].value' \
-		| cachix push janicogabo-nixos-config
+		| cachix push janicolo-nixos-config
 
 # Update flake inputs
 update:
