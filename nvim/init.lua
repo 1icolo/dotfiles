@@ -26,21 +26,8 @@ vim.diagnostic.config({
   update_in_insert = false,
 })
 
--- Keymaps
-vim.keymap.set('n', '<leader>cq', ':Cq ', { desc = 'Changelog Actionables' })
-vim.keymap.set('n', '<leader>nn', ':Note ', { desc = 'Open A Note' })
-vim.keymap.set('n', '<leader>na', ':NoteActionables ', { desc = 'View Actionables' })
-vim.keymap.set('n', '<leader><leader>',
-  function()
-    local l = vim.api.nvim_get_current_line(); local c = vim.api.nvim_win_get_cursor(0)[2] + 1; if l:sub(1, c - 1):match '%[' and l:sub(c):match '%]' then
-      vim.api.nvim_set_current_line(l:sub(1, c - 1) .. (l:sub(c, c) == 'x' and ' ' or 'x') .. l:sub(c + 1))
-    end
-  end, { desc = "Mark a Checkbox" })
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
-
--- LSP
 vim.lsp.config('*', {
   capabilities = capabilities,
   root_markers = { '.git' },
@@ -140,8 +127,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
---- Functions
+vim.keymap.set('n', '<leader>na', ':NoteActionables ', { desc = 'View Actionables' })
+vim.keymap.set('n', '<leader><leader>',
+  function()
+    local l = vim.api.nvim_get_current_line(); local c = vim.api.nvim_win_get_cursor(0)[2] + 1; if l:sub(1, c - 1):match '%[' and l:sub(c):match '%]' then
+      vim.api.nvim_set_current_line(l:sub(1, c - 1) .. (l:sub(c, c) == 'x' and ' ' or 'x') .. l:sub(c + 1))
+    end
+  end, { desc = "Mark a Checkbox" })
 
+
+-- Note: Create a new note with frontmatter template
 vim.api.nvim_create_user_command('Note', function(opts)
   local notes_dir = vim.env.NOTES_DIR or '${notes_dir}'
 
@@ -170,7 +165,7 @@ timestamp: "%s"
 ```text
 
 ```
-    ]], title, note_type, timestamp, title)
+  ]], title, note_type, timestamp, title)
 
   local filename = string.format("%s/notes/%s-%s.md", notes_dir, date, title:gsub('%s+', '-'))
 
@@ -201,11 +196,11 @@ end, {
   end
 })
 
+-- Cq: Find actionables in CHANGELOG.md
 vim.api.nvim_create_user_command('Cq', function(opts)
   local notes_dir = vim.env.NOTES_DIR or '${notesDir}'
   local changelog = notes_dir .. '/CHANGELOG.md'
   local project = table.concat(opts.fargs, ' ')
-  -- if project == '' then project = nil end
   if project ~= '' then
     vim.fn.execute(string.format('silent! vimgrep /- \\[ \\].*\\[\\[%s\\]\\]/ %s', project, changelog))
   else
@@ -302,8 +297,7 @@ vim.api.nvim_create_user_command('NoteActionables', function(opts)
           goto next_checkbox
         end
         local text = line:gsub('^%s*%- %[[ xX]%]%s*', ''):gsub('^%s+', '')
-        -- Extract title from frontmatter (first pass already read it, so we need to re-read or store it)
-        -- Re-read frontmatter for title
+        -- Extract title from frontmatter
         local file_title = nil
         local in_fm = false
         for i, l in ipairs(lines) do
@@ -399,3 +393,17 @@ end, {
   end,
   desc = 'Find actionable items (checkboxes) in notes. Args: [project] [all]'
 })
+
+-- Old Config
+
+-- package.path = package.path .. ';' .. vim.fn.stdpath("config") .. '/lua/?.lua'
+--
+-- -- Settings
+-- require('settings')
+--
+-- -- LSP
+-- require('lsp')
+--
+-- --- Functions
+--
+-- require('notes')
