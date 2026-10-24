@@ -172,8 +172,12 @@ in
   xdg.configFile."nvim/lua/notes.lua".source = ./nvim/lua/notes.lua;
 
   xdg.configFile."ghostty/config".source = ./ghostty/config.ghostty;
+  xdg.configFile."ghostty/shaders/cursor_lightning.glsl".source =
+    ./ghostty/shaders/cursor_lightning.glsl;
+  xdg.configFile."ghostty/shaders/sparks-from-fire.glsl".source =
+    ./ghostty/shaders/sparks-from-fire.glsl;
 
-  xdg.configFile."nix/nix.conf".source = ./nix/nix.conf;
+  # xdg.configFile."nix/nix.conf".source = ./nix/nix.conf;
 
   home.packages =
     with pkgs;
@@ -223,4 +227,3 @@ in
       # Linux non-WSL
     ];
 }
-
