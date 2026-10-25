@@ -1,3 +1,0 @@
-#!/bin/sh
-# sudo mount --mkdir /dev/nvme0n1p3 /run/media/janico/Windows
-sudo mount --mkdir /dev/nvme0n1p3 /mnt/Windows
