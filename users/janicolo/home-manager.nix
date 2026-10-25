@@ -182,6 +182,7 @@ in
   home.packages =
     with pkgs;
     [
+      ioskeley-mono.normal
       nix-diff
       awscli2
       bun

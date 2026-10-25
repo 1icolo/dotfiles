@@ -18,6 +18,7 @@
   # Desktop apps. Shared apps are in users/janicogabo/darwin.nix.
   homebrew.casks = [
     "discord"
+    "font-ioskeley-mono"
   ];
 
   # Enable the Linux builder so we can run Linux builds on our Mac.
