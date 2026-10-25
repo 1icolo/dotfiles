@@ -56,3 +56,4 @@ background-opacity = 0.95
 background-blur-radius = 40
 custom-shader = ./shaders/cursor_lightning.glsl
 custom-shader = ./shaders/sparks-from-fire.glsl
+theme = branch
