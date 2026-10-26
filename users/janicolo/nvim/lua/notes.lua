@@ -43,7 +43,10 @@ timestamp: "%s"
 
   local filename = string.format("%s/notes/%s-%s.md", notes_dir, date, title:gsub('%s+', '-'))
 
-  vim.fn.writefile(vim.split(template, "\n"), filename)
+  if not vim.uv.fs_stat(vim.fn.fnameescape(filename)) then
+    vim.fn.writefile(vim.split(template, "\n"), filename)
+  end
+
   vim.cmd.edit(vim.fn.fnameescape(filename))
 end, {
   nargs = '+',
@@ -269,4 +272,3 @@ end, {
 })
 
 return M
-
