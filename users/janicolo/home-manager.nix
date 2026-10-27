@@ -84,7 +84,6 @@ in
       ripgrep
       fd
       nil
-      nixd
       rust-analyzer
       lua-language-server
       tailwindcss-language-server
@@ -93,6 +92,18 @@ in
       ruff
       git
       terraform-ls
+      oxfmt
+      oxlint
+
+      alejandra
+      stylua
+
+      yaml-language-server
+      bash-language-server
+      shellcheck
+
+      fzf
+      # wl-clipboard # Use xclip if you are on X11 instead of Wayland
     ];
     plugins = with pkgs.vimPlugins; [
       { plugin = onedark-vim; }
@@ -114,15 +125,32 @@ in
         plugin = which-key-nvim;
         type = "lua";
         config = ''
-          	  local wk = require("which-key")
-                      wk.setup({})
-          	  wk.add({
-                       { "<leader>", group = "Leader" },
-                       { "<leader>m", group = "Markdown" },
-                       { "<leader>n", group = "Notes" },
-                       { "<leader>f", group = "File" },
-                       { "<leader>c", group = "Changelog" },
-                     })
+          local wk = require("which-key")
+          wk.setup({})
+          wk.add({
+            { "<leader>", group = "Leader" },
+            { "<leader>m", group = "Markdown" },
+            { "<leader>n", group = "Notes" },
+            { "<leader>f", group = "File" },
+            { "<leader>c", group = "Changelog" },
+          })
+        '';
+      }
+      {
+        plugin = oil-nvim;
+        type = "lua";
+        config = ''
+          local oil = require("oil")
+          oil.setup({})
+          oil.default_file_explorer = true;
+          oil.watch_for_changes = false,
+
+          columns = {
+            "icon",
+            "permissions",
+            "size",
+            "mtime",
+          },
         '';
       }
     ];
