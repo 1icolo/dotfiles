@@ -143,14 +143,13 @@ in
           local oil = require("oil")
           oil.setup({})
           oil.default_file_explorer = true;
-          oil.watch_for_changes = false,
-
-          columns = {
+          oil.watch_for_changes = false;
+          oil.columns = {
             "icon",
             "permissions",
             "size",
             "mtime",
-          },
+          };
         '';
       }
     ];
