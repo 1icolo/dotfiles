@@ -11,6 +11,9 @@
   # NixOS-WSL manages /etc/resolv.conf directly.
   networking.resolvconf.enable = false;
 
+  # Zsh as system shell (user login shell is set in users/janicolo/nixos.nix).
+  programs.zsh.enable = true;
+
   nix = {
     package = pkgs.nixVersions.latest;
     extraOptions = ''

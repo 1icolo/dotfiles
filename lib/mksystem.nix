@@ -20,16 +20,10 @@ let
   userOSConfig = ../users/${user}/${if darwin then "darwin" else "nixos"}.nix;
   userHMConfig = ../users/${user}/home-manager.nix;
 
-  # Create nixpkgs instance with allowUnfree = true
-  pkgs = import nixpkgs {
-    config = { allowUnfree = true; };
-    inherit system;
-  };
-
-  systemFunc = if darwin then inputs.darwin.lib.darwinSystem else pkgs.lib.nixosSystem;
+  systemFunc = if darwin then inputs.darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
   home-manager =
     if darwin then inputs.home-manager.darwinModules else inputs.home-manager.nixosModules;
-  inherit (pkgs.lib) optionals;
+  inherit (nixpkgs.lib) optionals;
 in
 systemFunc rec {
   inherit system;

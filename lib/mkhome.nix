@@ -10,7 +10,7 @@ name:
   inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = nixpkgs.legacyPackages.${system};
     modules = [
-      (import ./users/${user}/home-manager.nix {
+      (import ../users/${user}/home-manager.nix {
         isStandalone = true;
         isWSL = isWSL;
         currentSystemName = currentSystemName;

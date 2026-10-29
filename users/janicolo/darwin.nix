@@ -26,4 +26,3 @@
   };
   system.primaryUser = "janicogabo";
 }
-

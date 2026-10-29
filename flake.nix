@@ -14,19 +14,27 @@
       url = "github:Mic92/direnv-instant";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
+
     nix-rosetta-builder = {
       url = "github:cpick/nix-rosetta-builder";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
   outputs =
     { nixpkgs, ... }@inputs:
     let
@@ -49,12 +57,11 @@
         inherit nixpkgs inputs;
       };
       mkHome = import ./lib/mkhome.nix {
-        nixpkgs = { config = { allowUnfree = true; }; };
-        inherit inputs;
+        inherit nixpkgs inputs;
       };
     in
     {
-      linuxConfigurations.wsl = mkSystem "work-wsl" {
+      nixosConfigurations.work-wsl = mkSystem "work-wsl" {
         system = "x86_64-linux";
         user = "janicolo";
         wsl = true;
