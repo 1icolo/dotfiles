@@ -52,6 +52,7 @@ in
   # NixOS-WSL manages /etc/resolv.conf directly.
   networking.resolvconf.enable = false;
   networking.networkmanager.enable = true;
+  networking.dhcpcd.setHostname = "nixos-nico";
 
   # Zsh as system shell (user login shell is set in users/janicolo/nixos.nix).
   programs.zsh.enable = true;

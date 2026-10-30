@@ -254,5 +254,6 @@ in
     ]
     ++ lib.optionals (isLinux && !isWSL) [
       # Linux non-WSL
+      networkmanager-strongswan
     ];
 }
