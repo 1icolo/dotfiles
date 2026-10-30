@@ -10,7 +10,12 @@
   users.users.janicolo = {
     isNormalUser = true;
     home = "/home/janicolo";
-    extraGroups = [ "wheel" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
     shell = pkgs.zsh;
+    # WSL has no PAM login session, so start the user systemd manager at boot.
+    linger = isWSL;
   };
 }

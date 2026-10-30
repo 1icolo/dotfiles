@@ -1,18 +1,15 @@
 # justfile for nix-darwin + nixos-wsl + standalone home-manager
 # Usage: just switch [target]
+#   Target defaults to macbook-pro-m1 on macOS and work-wsl on Linux.
+#   Both `just switch work-wsl` and `just switch target=work-wsl` work.
 
 # Auto-detect system
 uname := `uname -s`
 
-# Target selection (can override: just switch target=macbook-pro-m1)
-target := ""
-
-# Map to flake configurations
+# Default target for this OS
 nixname := if uname == "Darwin" { "macbook-pro-m1" } else { "work-wsl" }
-target_name := if target != "" { target } else { nixname }
 
-darwin_flake := ".#darwinConfigurations." + target_name
-nixos_flake := ".#nixosConfigurations." + target_name
+# Standalone home-manager flake references
 hm_flake_linux := ".#homeConfigurations.janicolo@x86_64-linux"
 hm_flake_wsl := ".#homeConfigurations.janicolo@x86_64-linux-wsl"
 
@@ -20,32 +17,44 @@ hm_flake_wsl := ".#homeConfigurations.janicolo@x86_64-linux-wsl"
 default: switch
 
 # --- System switch (nix-darwin / nixos-wsl) ---
-switch:
+switch *args:
 	#!/usr/bin/env sh
+	set -eu
+	target="{{args}}"
+	target="${target#target=}"
+	target="${target:-{{nixname}}}"
 	if [ "{{uname}}" = "Darwin" ]; then
-		nix build "{{darwin_flake}}.system"
-		sudo ./result/sw/bin/darwin-rebuild switch --flake "$(pwd)#{{target_name}}"
+		nix build ".#darwinConfigurations.${target}.system"
+		sudo ./result/sw/bin/darwin-rebuild switch --flake "$(pwd)#${target}"
 	else
-		sudo nixos-rebuild switch --flake "{{nixos_flake}}"
+		sudo nixos-rebuild switch --flake ".#${target}"
 	fi
 
 # Test configuration without making it boot default
-test:
+test *args:
 	#!/usr/bin/env sh
+	set -eu
+	target="{{args}}"
+	target="${target#target=}"
+	target="${target:-{{nixname}}}"
 	if [ "{{uname}}" = "Darwin" ]; then
-		nix build "{{darwin_flake}}.system"
-		sudo ./result/sw/bin/darwin-rebuild test --flake "$(pwd)#{{target_name}}"
+		nix build ".#darwinConfigurations.${target}.system"
+		sudo ./result/sw/bin/darwin-rebuild test --flake "$(pwd)#${target}"
 	else
-		sudo nixos-rebuild test --flake "{{nixos_flake}}"
+		sudo nixos-rebuild test --flake ".#${target}"
 	fi
 
 # Build without switching
-build:
+build *args:
 	#!/usr/bin/env sh
+	set -eu
+	target="{{args}}"
+	target="${target#target=}"
+	target="${target:-{{nixname}}}"
 	if [ "{{uname}}" = "Darwin" ]; then
-		nix build "{{darwin_flake}}.system"
+		nix build ".#darwinConfigurations.${target}.system"
 	else
-		nix build "{{nixos_flake}}.config.system.build.toplevel"
+		nix build ".#nixosConfigurations.${target}.config.system.build.toplevel"
 	fi
 
 # --- Standalone home-manager ---
@@ -112,9 +121,8 @@ check-all:
 
 # Push to cachix (requires auth)
 cache:
-	nix build '.#nixosConfigurations.work-wsl.config.system.build.toplevel' --json \
-		| jq -r '.[].outputs | to_entries[].value' \
-		| cachix push janicolo-nixos-config
+	nix build '.#nixosConfigurations.work-wsl.config.system.build.toplevel' --no-link --print-out-paths \
+		| nix run nixpkgs#cachix -- push janicolo-nixos-config
 
 # Update flake inputs
 update:
@@ -140,21 +148,26 @@ rollback:
 
 # Garbage collect old generations
 gc:
-	sudo nix store gc --delete-older-than 30d
+	sudo nix-collect-garbage --delete-older-than 30d
 
-# Show disk usage
+# Show what GC would remove and current store disk usage
 gc-stats:
-	nix store gc --print-roots --print-live --print-dead
+	nix store gc --dry-run
+	df -h /nix/store
 
 # Edit this justfile
 edit:
 	$EDITOR justfile
 
 # Show detected system info
-info:
-	@echo "System: {{uname}}"
-	@echo "Target: {{target_name}}"
-	@echo "Flake dir: {{`pwd`}}"
+info *args:
+	#!/usr/bin/env sh
+	target="{{args}}"
+	target="${target#target=}"
+	target="${target:-{{nixname}}}"
+	echo "System: {{uname}}"
+	echo "Target: ${target}"
+	echo "Flake dir: $(pwd)"
 
 # List all available targets
 targets:

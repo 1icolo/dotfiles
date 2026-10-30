@@ -15,7 +15,7 @@
 let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
-  notesDir = "$HOME/work";
+  notesDir = "$HOME/work/notes";
   unstable = import inputs.nixpkgs-unstable {
     inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
@@ -103,7 +103,7 @@ in
       shellcheck
 
       fzf
-      # wl-clipboard # Use xclip if you are on X11 instead of Wayland
+      # wl-clipboard # xclip for X11 instead of Wayland
     ];
     plugins = with pkgs.vimPlugins; [
       { plugin = onedark-vim; }
@@ -119,6 +119,7 @@ in
           vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
           vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
           vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+          vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Telescope recent files" })
         '';
       }
       {
