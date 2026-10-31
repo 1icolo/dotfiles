@@ -113,6 +113,33 @@ in
         "ui.background" = { };
       };
     };
+    extraPackages = with pkgs; [
+      git
+
+      ripgrep
+      fzf
+      fd
+
+      lazygit
+
+      nil
+      alejandra
+      rust-analyzer
+      lua-language-server
+      tailwindcss-language-server
+      typescript-language-server
+      markdown-oxide
+      ruff
+      terraform-ls
+      oxfmt
+      oxlint
+      stylua
+      yaml-language-server
+      bash-language-server
+      shellcheck
+
+      # wl-clipboard # Use xclip if you are on X11 instead of Wayland
+    ];
   };
 
   programs.neovim = {
