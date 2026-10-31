@@ -73,6 +73,48 @@ in
   #   extraConfig = builtins.readFile ./wezterm/wezterm.lua;
   # };
 
+  programs.helix = {
+    enable = true;
+    settings = {
+      theme = "gruvbox_dark_hard";
+      editor = {
+        default-yank-register = "+";
+        line-number = "relative";
+      };
+      editor.cursor-shape = {
+        normal = "block";
+        insert = "bar";
+        select = "underline";
+      };
+      keys.normal = {
+        "C-g" = [
+          ":write-all"
+          ":new"
+          ":insert-output lazygit"
+          ":buffer-close!"
+          ":redraw"
+          ":reload-all"
+        ];
+      };
+      keys.normal.space = {
+        "B" = [ ":! git blame -L %{cursor_line},%{cursor_line} %{buffer_name}" ];
+      };
+    };
+    languages.language = [
+      {
+        name = "nix";
+        auto-format = true;
+        formatter.command = lib.getExe pkgs.nixfmt;
+      }
+    ];
+    themes = {
+      autumn_night_transparent = {
+        "inherits" = "autumn_night";
+        "ui.background" = { };
+      };
+    };
+  };
+
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -241,6 +283,7 @@ in
       bat
       pv
       just
+      tldr
     ]
     ++ lib.optionals isDarwin [
       # Darwin-specific
