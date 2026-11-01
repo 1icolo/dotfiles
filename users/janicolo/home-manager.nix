@@ -76,7 +76,7 @@ in
   programs.helix = {
     enable = true;
     settings = {
-      theme = "gruvbox_dark_hard";
+      theme = "base16_transparent";
       editor = {
         default-yank-register = "+";
         line-number = "relative";
