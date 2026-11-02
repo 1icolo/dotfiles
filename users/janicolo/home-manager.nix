@@ -150,7 +150,7 @@ in {
           #   start = "/*";
           #   end = "*/";
           # };
-          filetypes = ["rust"];
+          filetypes = ["rs"];
           # indent = { tab-width = 2, unit = "  " };
           roots = [
             "Cargo.toml"
@@ -170,7 +170,7 @@ in {
           scope = "source.python";
           auto-format = true;
           language-servers = ["ruff"];
-          filetypes = ["python"];
+          filetypes = ["py"];
           roots = ["pyproject.toml"];
         }
         {
@@ -179,10 +179,10 @@ in {
           auto-format = true;
           language-servers = ["typescript-language-server"];
           filetypes = [
-            "typescript"
-            "typescriptreact"
-            "javascript"
-            "javascriptreact"
+            "ts"
+            "tsx"
+            "js"
+            "jsx"
           ];
           roots = [
             "package.json"
@@ -194,7 +194,7 @@ in {
           scope = "source.hcl";
           language-servers = ["terraform-ls"];
           filetypes = [
-            "terraform"
+            "tf"
             "hcl"
           ];
         }
@@ -205,15 +205,13 @@ in {
           filetypes = [
             "html"
             "css"
-            "javascriptreact"
-            "typescriptreact"
           ];
         }
         {
           name = "markdown";
           scope = "text.markdown";
           language-servers = ["markdown-oxide"];
-          filetypes = ["markdown"];
+          filetypes = ["md" "markdown"];
         }
       ];
     };
