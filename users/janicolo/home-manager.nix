@@ -4,15 +4,12 @@
   inputs,
   currentSystemName,
   ...
-}:
-{
+}: {
   config,
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
   notesDir = "$HOME/work";
@@ -20,9 +17,8 @@ let
     inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
   };
-in
-{
-  imports = lib.optionals (!isStandalone) [ inputs.direnv-instant.homeModules.direnv-instant ];
+in {
+  imports = lib.optionals (!isStandalone) [inputs.direnv-instant.homeModules.direnv-instant];
 
   home.stateVersion = "26.05";
   home.enableNixpkgsReleaseCheck = false;
@@ -35,7 +31,7 @@ in
     NOTES_DIR = notesDir;
   };
 
-  home.sessionPath = [ "$HOME/.local/bin" ];
+  home.sessionPath = ["$HOME/.local/bin"];
 
   # Programs
   programs.yazi = {
@@ -63,15 +59,8 @@ in
     enableZshIntegration = true;
     enableFishIntegration = true;
     enableBashIntegration = true;
-    options = [ "--cmd cd" ];
+    options = ["--cmd cd"];
   };
-
-  # programs.wezterm = {
-  #   enable = true;
-  #   enableZshIntegration = true;
-  #   enableBashIntegration = true;
-  #   extraConfig = builtins.readFile ./wezterm/wezterm.lua;
-  # };
 
   programs.helix = {
     enable = true;
@@ -87,6 +76,9 @@ in
         select = "underline";
       };
       keys.normal = {
+        space = {
+          "B" = [":! git blame -L %{cursor_line},%{cursor_line} %{buffer_name}"];
+        };
         "C-g" = [
           ":write-all"
           ":new"
@@ -96,21 +88,11 @@ in
           ":reload-all"
         ];
       };
-      keys.normal.space = {
-        "B" = [ ":! git blame -L %{cursor_line},%{cursor_line} %{buffer_name}" ];
-      };
     };
-    languages.language = [
-      {
-        name = "nix";
-        auto-format = true;
-        formatter.command = lib.getExe pkgs.nixfmt;
-      }
-    ];
     themes = {
       autumn_night_transparent = {
         "inherits" = "autumn_night";
-        "ui.background" = { };
+        "ui.background" = {};
       };
     };
     extraPackages = with pkgs; [
@@ -122,9 +104,10 @@ in
 
       lazygit
 
-      nil
+      nixd
       alejandra
       rust-analyzer
+      rustfmt
       lua-language-server
       tailwindcss-language-server
       typescript-language-server
@@ -137,9 +120,103 @@ in
       yaml-language-server
       bash-language-server
       shellcheck
-
       # wl-clipboard # Use xclip if you are on X11 instead of Wayland
     ];
+    languages = {
+      language = [
+        {
+          name = "nix";
+          scope = "source.nix";
+          auto-format = true;
+          language-servers = [
+            "nil"
+            "nixd"
+          ];
+          formatter.command = lib.getExe pkgs.alejandra;
+          filetypes = ["nix"];
+          roots = [
+            "flake.nix"
+            "flake.lock"
+          ];
+        }
+        {
+          name = "rust";
+          scope = "source.rust";
+          auto-format = true;
+          language-servers = ["rust-analyzer"];
+          formatter.command = lib.getExe pkgs.rustfmt;
+          # comment-tokens = "//";
+          # block-comment-tokens = {
+          #   start = "/*";
+          #   end = "*/";
+          # };
+          filetypes = ["rust"];
+          # indent = { tab-width = 2, unit = "  " };
+          roots = [
+            "Cargo.toml"
+            "Cargo.lock"
+          ];
+        }
+        {
+          name = "lua";
+          scope = "source.lua";
+          auto-format = true;
+          language-servers = ["lua-language-server"];
+          formatter.command = lib.getExe pkgs.stylua;
+          filetypes = ["lua"];
+        }
+        {
+          name = "python";
+          scope = "source.python";
+          auto-format = true;
+          language-servers = ["ruff"];
+          filetypes = ["python"];
+          roots = ["pyproject.toml"];
+        }
+        {
+          name = "typescript";
+          scope = "source.ts";
+          auto-format = true;
+          language-servers = ["typescript-language-server"];
+          filetypes = [
+            "typescript"
+            "typescriptreact"
+            "javascript"
+            "javascriptreact"
+          ];
+          roots = [
+            "package.json"
+            "tsconfig.json"
+          ];
+        }
+        {
+          name = "terraform";
+          scope = "source.hcl";
+          language-servers = ["terraform-ls"];
+          filetypes = [
+            "terraform"
+            "hcl"
+          ];
+        }
+        {
+          name = "tailwindcss";
+          scope = "source.css";
+          language-servers = ["tailwindcss-language-server"];
+          filetypes = [
+            "html"
+            "css"
+            "javascriptreact"
+            "typescriptreact"
+          ];
+        }
+        {
+          name = "markdown";
+          scope = "text.markdown";
+          language-servers = ["markdown-oxide"];
+          filetypes = ["markdown"];
+        }
+      ];
+    };
   };
 
   programs.neovim = {
@@ -152,7 +229,6 @@ in
     extraPackages = with pkgs; [
       ripgrep
       fd
-      nil
       rust-analyzer
       lua-language-server
       tailwindcss-language-server
@@ -175,10 +251,10 @@ in
       # wl-clipboard # Use xclip if you are on X11 instead of Wayland
     ];
     plugins = with pkgs.vimPlugins; [
-      { plugin = onedark-vim; }
-      { plugin = gitsigns-nvim; }
-      { plugin = markdown-preview-nvim; }
-      { plugin = nvim-treesitter.withAllGrammars; }
+      {plugin = onedark-vim;}
+      {plugin = gitsigns-nvim;}
+      {plugin = markdown-preview-nvim;}
+      {plugin = nvim-treesitter.withAllGrammars;}
       {
         plugin = telescope-nvim;
         type = "lua";
@@ -244,7 +320,7 @@ in
 
   programs.zsh = {
     enable = true;
-    shellAliases = { };
+    shellAliases = {};
     initContent = ''
       if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
@@ -260,7 +336,7 @@ in
     mutableUserSettings = true;
     mutableUserKeymaps = true;
     mutableUserTasks = true;
-    extraPackages = [ pkgs.ripgrep ];
+    extraPackages = [pkgs.ripgrep];
   };
 
   xdg.configFile."nvim/lua/settings.lua".source = ./nvim/lua/settings.lua;
@@ -275,8 +351,7 @@ in
 
   # xdg.configFile."nix/nix.conf".source = ./nix/nix.conf;
 
-  home.packages =
-    with pkgs;
+  home.packages = with pkgs;
     [
       ioskeley-mono.normal
       nix-diff
@@ -311,6 +386,7 @@ in
       pv
       just
       tldr
+      quarto
     ]
     ++ lib.optionals isDarwin [
       # Darwin-specific
