@@ -133,7 +133,6 @@ in {
             "nixd"
           ];
           formatter.command = lib.getExe pkgs.alejandra;
-          filetypes = ["nix"];
           roots = [
             "flake.nix"
             "flake.lock"
@@ -150,7 +149,7 @@ in {
           #   start = "/*";
           #   end = "*/";
           # };
-          filetypes = ["rs"];
+          file-types = ["rs"];
           # indent = { tab-width = 2, unit = "  " };
           roots = [
             "Cargo.toml"
@@ -163,14 +162,14 @@ in {
           auto-format = true;
           language-servers = ["lua-language-server"];
           formatter.command = lib.getExe pkgs.stylua;
-          filetypes = ["lua"];
+          file-types = ["lua"];
         }
         {
           name = "python";
           scope = "source.python";
           auto-format = true;
           language-servers = ["ruff"];
-          filetypes = ["py"];
+          file-types = ["py"];
           roots = ["pyproject.toml"];
         }
         {
@@ -178,7 +177,7 @@ in {
           scope = "source.ts";
           auto-format = true;
           language-servers = ["typescript-language-server"];
-          filetypes = [
+          file-types = [
             "ts"
             "tsx"
             "js"
@@ -193,7 +192,7 @@ in {
           name = "terraform";
           scope = "source.hcl";
           language-servers = ["terraform-ls"];
-          filetypes = [
+          file-types = [
             "tf"
             "hcl"
           ];
@@ -202,7 +201,7 @@ in {
           name = "tailwindcss";
           scope = "source.css";
           language-servers = ["tailwindcss-language-server"];
-          filetypes = [
+          file-types = [
             "html"
             "css"
           ];
@@ -211,7 +210,7 @@ in {
           name = "markdown";
           scope = "text.markdown";
           language-servers = ["markdown-oxide"];
-          filetypes = ["md" "markdown"];
+          file-types = ["md" "markdown"];
         }
       ];
     };
@@ -396,6 +395,6 @@ in {
       # Linux-specific
     ]
     ++ lib.optionals (isLinux && !isWSL) [
-      # Linux non-WSL
+      # Linux non-WSLscope
     ];
 }
