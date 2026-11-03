@@ -11,7 +11,6 @@
   pkgs,
   ...
 }:
-
 let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
@@ -66,12 +65,162 @@ in
     options = [ "--cmd cd" ];
   };
 
-  # programs.wezterm = {
-  #   enable = true;
-  #   enableZshIntegration = true;
-  #   enableBashIntegration = true;
-  #   extraConfig = builtins.readFile ./wezterm/wezterm.lua;
-  # };
+  programs.helix = {
+    enable = true;
+    settings = {
+      theme = "base16_transparent";
+      editor = {
+        default-yank-register = "+";
+        line-number = "relative";
+      };
+      editor.cursor-shape = {
+        normal = "block";
+        insert = "bar";
+        select = "underline";
+      };
+      keys.normal = {
+        space = {
+          "B" = [ ":! git blame -L %{cursor_line},%{cursor_line} %{buffer_name}" ];
+        };
+        "C-g" = [
+          ":write-all"
+          ":new"
+          ":insert-output lazygit"
+          ":buffer-close!"
+          ":redraw"
+          ":reload-all"
+        ];
+      };
+    };
+    themes = {
+      autumn_night_transparent = {
+        "inherits" = "autumn_night";
+        "ui.background" = { };
+      };
+    };
+    extraPackages = with pkgs; [
+      git
+
+      ripgrep
+      fzf
+      fd
+
+      lazygit
+
+      nixd
+      alejandra
+      rust-analyzer
+      rustfmt
+      lua-language-server
+      tailwindcss-language-server
+      typescript-language-server
+      markdown-oxide
+      ruff
+      terraform-ls
+      oxfmt
+      oxlint
+      stylua
+      yaml-language-server
+      bash-language-server
+      shellcheck
+      # wl-clipboard # Use xclip if you are on X11 instead of Wayland
+    ];
+    languages = {
+      language = [
+        {
+          name = "nix";
+          scope = "source.nix";
+          auto-format = true;
+          language-servers = [
+            "nil"
+            "nixd"
+          ];
+          formatter.command = lib.getExe pkgs.alejandra;
+          roots = [
+            "flake.nix"
+            "flake.lock"
+          ];
+        }
+        {
+          name = "rust";
+          scope = "source.rust";
+          auto-format = true;
+          language-servers = [ "rust-analyzer" ];
+          formatter.command = lib.getExe pkgs.rustfmt;
+          # comment-tokens = "//";
+          # block-comment-tokens = {
+          #   start = "/*";
+          #   end = "*/";
+          # };
+          file-types = [ "rs" ];
+          # indent = { tab-width = 2, unit = "  " };
+          roots = [
+            "Cargo.toml"
+            "Cargo.lock"
+          ];
+        }
+        {
+          name = "lua";
+          scope = "source.lua";
+          auto-format = true;
+          language-servers = [ "lua-language-server" ];
+          formatter.command = lib.getExe pkgs.stylua;
+          file-types = [ "lua" ];
+        }
+        {
+          name = "python";
+          scope = "source.python";
+          auto-format = true;
+          language-servers = [ "ruff" ];
+          file-types = [ "py" ];
+          roots = [ "pyproject.toml" ];
+        }
+        {
+          name = "typescript";
+          scope = "source.ts";
+          auto-format = true;
+          language-servers = [ "typescript-language-server" ];
+          file-types = [
+            "ts"
+            "tsx"
+            "js"
+            "jsx"
+          ];
+          roots = [
+            "package.json"
+            "tsconfig.json"
+          ];
+        }
+        {
+          name = "terraform";
+          scope = "source.hcl";
+          language-servers = [ "terraform-ls" ];
+          file-types = [
+            "tf"
+            "hcl"
+          ];
+        }
+        {
+          name = "tailwindcss";
+          scope = "source.css";
+          language-servers = [ "tailwindcss-language-server" ];
+          file-types = [
+            "html"
+            "css"
+          ];
+        }
+        {
+          name = "markdown";
+          scope = "text.markdown";
+          language-servers = [ "markdown-oxide" ];
+          file-types = [
+            "md"
+            "markdown"
+          ];
+        }
+      ];
+    };
+  };
 
   programs.neovim = {
     enable = true;
@@ -83,7 +232,6 @@ in
     extraPackages = with pkgs; [
       ripgrep
       fd
-      nil
       rust-analyzer
       lua-language-server
       tailwindcss-language-server
@@ -242,6 +390,8 @@ in
       bat
       pv
       just
+      tldr
+      quarto
     ]
     ++ lib.optionals isDarwin [
       # Darwin-specific
@@ -255,5 +405,6 @@ in
     ++ lib.optionals (isLinux && !isWSL) [
       # Linux non-WSL
       networkmanager-strongswan
+      # Linux non-WSLscope
     ];
 }
