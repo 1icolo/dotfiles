@@ -3,8 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   imports = [
     ./darwin-shared.nix
   ];
@@ -16,10 +15,16 @@
   ids.gids.nixbld = 350;
 
   # Desktop apps. Shared apps are in users/janicogabo/darwin.nix.
-  homebrew.casks = [
-    "discord"
-    "font-ioskeley-mono"
-  ];
+  homebrew = {
+    enable = true;
+    brews = [
+      "ipatool"
+    ];
+    casks = [
+      "discord"
+      "font-ioskeley-mono"
+    ];
+  };
 
   # Enable the Linux builder so we can run Linux builds on our Mac.
   # This can be debugged by running `sudo ssh linux-builder`
