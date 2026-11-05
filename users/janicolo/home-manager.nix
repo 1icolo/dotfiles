@@ -14,7 +14,7 @@
 let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
-  notesDir = "$HOME/work/notes";
+  notesDir = "$HOME/work";
   unstable = import inputs.nixpkgs-unstable {
     inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
@@ -123,7 +123,8 @@ in
       yaml-language-server
       bash-language-server
       shellcheck
-      # wl-clipboard # Use xclip if you are on X11 instead of Wayland
+      wl-clipboard 
+      xclip # if you are on X11 instead of Wayland
     ];
     languages = {
       language = [
@@ -251,7 +252,9 @@ in
       shellcheck
 
       fzf
-      # wl-clipboard # xclip for X11 instead of Wayland
+      wl-clipboard 
+      xclip
+      # xclip for X11 instead of Wayland
     ];
     plugins = with pkgs.vimPlugins; [
       { plugin = onedark-vim; }
@@ -392,6 +395,7 @@ in
       just
       tldr
       quarto
+      texliveSmall
     ]
     ++ lib.optionals isDarwin [
       # Darwin-specific

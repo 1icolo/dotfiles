@@ -49,6 +49,10 @@ in
     startMenuLaunchers = true;
   };
 
+  environment.sessionVariables = {
+    XDG_RUNTIME_DIR = "/mnt/wslg/runtime-dir";
+  };
+
   # NixOS-WSL manages /etc/resolv.conf directly.
   networking.resolvconf.enable = false;
   networking.networkmanager.enable = true;

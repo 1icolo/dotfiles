@@ -2,13 +2,6 @@ local M = {}
 
 vim.keymap.set('n', '<leader>nn', ':Note ', { desc = 'Open A Note' })
 vim.keymap.set('n', '<leader>na', ':NoteActionables ', { desc = 'View Actionables' })
-vim.keymap.set('n', '<leader><leader>',
-  function()
-    local l = vim.api.nvim_get_current_line(); local c = vim.api.nvim_win_get_cursor(0)[2] + 1; if l:sub(1, c - 1):match '%[' and l:sub(c):match '%]' then
-      vim.api.nvim_set_current_line(l:sub(1, c - 1) .. (l:sub(c, c) == 'x' and ' ' or 'x') .. l:sub(c + 1))
-    end
-  end, { desc = "Mark a Checkbox" })
-
 
 -- Note: Create a new note with frontmatter template
 vim.api.nvim_create_user_command('Note', function(opts)
@@ -73,38 +66,6 @@ end, {
   end
 })
 
--- Cq: Find actionables in CHANGELOG.md
-vim.api.nvim_create_user_command('Cq', function(opts)
-  local notes_dir = vim.env.NOTES_DIR or '${notesDir}'
-  local changelog = notes_dir .. '/CHANGELOG.md'
-  local project = table.concat(opts.fargs, ' ')
-  if project ~= '' then
-    vim.fn.execute(string.format('silent! vimgrep /- \\[ \\].*\\[\\[%s\\]\\]/ %s', project, changelog))
-  else
-    project = nil
-    vim.fn.execute(string.format('silent! vimgrep /- \\[ \\]/ %s', changelog))
-  end
-  if #vim.fn.getqflist() == 0 then
-    print(project and ('No open actionables for ' .. project) or 'No open actionables')
-  else
-    vim.fn.execute('copen')
-  end
-end, {
-  nargs = '*',
-  complete = function()
-    local notes_dir = vim.env.NOTES_DIR or '${notesDir}'
-    local lines = vim.fn.readfile(notes_dir .. '/CHANGELOG.md')
-    local projects, seen = {}, {}
-    for _, line in ipairs(lines) do
-      for p in line:gmatch('%[%[([^%]]+)%]%]') do
-        if not seen[p] then
-          seen[p] = true; table.insert(projects, p)
-        end
-      end
-    end
-    return projects
-  end
-})
 
 -- NoteActionables: Find checkbox items in notes, optionally filtered by project (frontmatter)
 -- Usage: :NoteActionables [project] [all]
