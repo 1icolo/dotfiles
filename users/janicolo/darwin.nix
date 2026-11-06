@@ -7,7 +7,11 @@
   ...
 }:
 {
-  # Darwin-specific configuration
+  homebrew = {
+    enable = true;
+    casks  = [];
+    brews = [];
+  };
   system.stateVersion = 7;
   system.defaults.dock = {
     autohide = true;

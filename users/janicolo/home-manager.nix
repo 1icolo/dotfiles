@@ -155,6 +155,27 @@ in {
             "Cargo.toml"
             "Cargo.lock"
           ];
+          debugger = {
+            name = "lldb-dap";
+            transport = "stdio";
+            command = "lldb";
+            templates = [
+              {
+                name = "binary";
+                request = "launch";
+                completion = [
+                  {
+                    name = "binary";
+                    completion = "filename";
+                  }
+                ];
+                args = {
+                  program = "{0}";
+                  runInTerminal = true;
+                };
+              }
+            ];
+          };
         }
         {
           name = "lua";
@@ -326,6 +347,9 @@ in {
       if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
+      if [ -d '/opt/homebrew' ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+      fi
     '';
   };
 
@@ -387,7 +411,7 @@ in {
       pv
       just
       tldr
-      quarto
+      pandoc
       texliveSmall
     ]
     ++ lib.optionals isDarwin [
