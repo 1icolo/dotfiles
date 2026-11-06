@@ -63,6 +63,7 @@ in {
 
   programs.helix = {
     enable = true;
+    defaultEditor = true;
     settings = {
       theme = "base16_transparent";
       editor = {
@@ -94,35 +95,37 @@ in {
         "ui.background" = {};
       };
     };
-    extraPackages = with pkgs; [
-      git
+    extraPackages = with pkgs;
+      [
+        git
 
-      ripgrep
-      fzf
-      fd
+        ripgrep
+        fzf
+        fd
 
-      lazygit
+        lazygit
 
-      nixd
-      alejandra
-      rust-analyzer
-      rustfmt
-      lua-language-server
-      tailwindcss-language-server
-      typescript-language-server
-      markdown-oxide
-      ruff
-      terraform-ls
-      oxfmt
-      oxlint
-      stylua
-      yaml-language-server
-      bash-language-server
-      shellcheck
-      # xclip # if you are on X11 instead of Wayland
-    ] ++ lib.optionals isLinux [
-      wl-clipboard
-    ];
+        nixd
+        alejandra
+        rust-analyzer
+        rustfmt
+        lua-language-server
+        tailwindcss-language-server
+        typescript-language-server
+        markdown-oxide
+        ruff
+        terraform-ls
+        oxfmt
+        oxlint
+        stylua
+        yaml-language-server
+        bash-language-server
+        shellcheck
+        # xclip # if you are on X11 instead of Wayland
+      ]
+      ++ lib.optionals isLinux [
+        wl-clipboard
+      ];
     languages = {
       language = [
         {
@@ -245,34 +248,35 @@ in {
     enable = true;
     viAlias = true;
     vimAlias = true;
-    defaultEditor = true;
     withPython3 = true;
     withRuby = true;
-    extraPackages = with pkgs; [
-      ripgrep
-      fd
-      rust-analyzer
-      lua-language-server
-      tailwindcss-language-server
-      typescript-language-server
-      markdown-oxide
-      ruff
-      git
-      terraform-ls
-      oxfmt
-      oxlint
+    extraPackages = with pkgs;
+      [
+        ripgrep
+        fd
+        rust-analyzer
+        lua-language-server
+        tailwindcss-language-server
+        typescript-language-server
+        markdown-oxide
+        ruff
+        git
+        terraform-ls
+        oxfmt
+        oxlint
 
-      alejandra
-      stylua
+        alejandra
+        stylua
 
-      yaml-language-server
-      bash-language-server
-      shellcheck
+        yaml-language-server
+        bash-language-server
+        shellcheck
 
-      fzf
-    ] ++ lib.optionals isLinux [
-      wl-clipboard
-    ];
+        fzf
+      ]
+      ++ lib.optionals isLinux [
+        wl-clipboard
+      ];
     plugins = with pkgs.vimPlugins; [
       {plugin = onedark-vim;}
       {plugin = gitsigns-nvim;}
