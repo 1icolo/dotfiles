@@ -119,8 +119,9 @@ in {
       yaml-language-server
       bash-language-server
       shellcheck
-      wl-clipboard
       # xclip # if you are on X11 instead of Wayland
+    ] ++ lib.optionals isLinux [
+      wl-clipboard
     ];
     languages = {
       language = [
@@ -269,6 +270,7 @@ in {
       shellcheck
 
       fzf
+    ] ++ lib.optionals isLinux [
       wl-clipboard
     ];
     plugins = with pkgs.vimPlugins; [
