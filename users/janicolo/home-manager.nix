@@ -4,14 +4,12 @@
   inputs,
   currentSystemName,
   ...
-}:
-{
+}: {
   config,
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
   notesDir = "$HOME/work";
@@ -19,9 +17,8 @@ let
     inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
   };
-in
-{
-  imports = lib.optionals (!isStandalone) [ inputs.direnv-instant.homeModules.direnv-instant ];
+in {
+  imports = lib.optionals (!isStandalone) [inputs.direnv-instant.homeModules.direnv-instant];
 
   home.stateVersion = "26.05";
   home.enableNixpkgsReleaseCheck = false;
@@ -34,9 +31,8 @@ in
     NOTES_DIR = notesDir;
   };
 
-  home.sessionPath = [ "$HOME/.local/bin" ];
+  home.sessionPath = ["$HOME/.local/bin"];
 
-  # Programs
   programs.yazi = {
     enable = true;
     extraPackages = with pkgs; [
@@ -62,7 +58,7 @@ in
     enableZshIntegration = true;
     enableFishIntegration = true;
     enableBashIntegration = true;
-    options = [ "--cmd cd" ];
+    options = ["--cmd cd"];
   };
 
   programs.helix = {
@@ -80,7 +76,7 @@ in
       };
       keys.normal = {
         space = {
-          "B" = [ ":! git blame -L %{cursor_line},%{cursor_line} %{buffer_name}" ];
+          "B" = [":! git blame -L %{cursor_line},%{cursor_line} %{buffer_name}"];
         };
         "C-g" = [
           ":write-all"
@@ -95,7 +91,7 @@ in
     themes = {
       autumn_night_transparent = {
         "inherits" = "autumn_night";
-        "ui.background" = { };
+        "ui.background" = {};
       };
     };
     extraPackages = with pkgs; [
@@ -123,8 +119,8 @@ in
       yaml-language-server
       bash-language-server
       shellcheck
-      wl-clipboard 
-      xclip # if you are on X11 instead of Wayland
+      wl-clipboard
+      # xclip # if you are on X11 instead of Wayland
     ];
     languages = {
       language = [
@@ -146,14 +142,14 @@ in
           name = "rust";
           scope = "source.rust";
           auto-format = true;
-          language-servers = [ "rust-analyzer" ];
+          language-servers = ["rust-analyzer"];
           formatter.command = lib.getExe pkgs.rustfmt;
           # comment-tokens = "//";
           # block-comment-tokens = {
           #   start = "/*";
           #   end = "*/";
           # };
-          file-types = [ "rs" ];
+          file-types = ["rs"];
           # indent = { tab-width = 2, unit = "  " };
           roots = [
             "Cargo.toml"
@@ -164,23 +160,23 @@ in
           name = "lua";
           scope = "source.lua";
           auto-format = true;
-          language-servers = [ "lua-language-server" ];
+          language-servers = ["lua-language-server"];
           formatter.command = lib.getExe pkgs.stylua;
-          file-types = [ "lua" ];
+          file-types = ["lua"];
         }
         {
           name = "python";
           scope = "source.python";
           auto-format = true;
-          language-servers = [ "ruff" ];
-          file-types = [ "py" ];
-          roots = [ "pyproject.toml" ];
+          language-servers = ["ruff"];
+          file-types = ["py"];
+          roots = ["pyproject.toml"];
         }
         {
           name = "typescript";
           scope = "source.ts";
           auto-format = true;
-          language-servers = [ "typescript-language-server" ];
+          language-servers = ["typescript-language-server"];
           file-types = [
             "ts"
             "tsx"
@@ -195,7 +191,7 @@ in
         {
           name = "terraform";
           scope = "source.hcl";
-          language-servers = [ "terraform-ls" ];
+          language-servers = ["terraform-ls"];
           file-types = [
             "tf"
             "hcl"
@@ -204,7 +200,7 @@ in
         {
           name = "tailwindcss";
           scope = "source.css";
-          language-servers = [ "tailwindcss-language-server" ];
+          language-servers = ["tailwindcss-language-server"];
           file-types = [
             "html"
             "css"
@@ -213,7 +209,7 @@ in
         {
           name = "markdown";
           scope = "text.markdown";
-          language-servers = [ "markdown-oxide" ];
+          language-servers = ["markdown-oxide"];
           file-types = [
             "md"
             "markdown"
@@ -252,15 +248,13 @@ in
       shellcheck
 
       fzf
-      wl-clipboard 
-      xclip
-      # xclip for X11 instead of Wayland
+      wl-clipboard
     ];
     plugins = with pkgs.vimPlugins; [
-      { plugin = onedark-vim; }
-      { plugin = gitsigns-nvim; }
-      { plugin = markdown-preview-nvim; }
-      { plugin = nvim-treesitter.withAllGrammars; }
+      {plugin = onedark-vim;}
+      {plugin = gitsigns-nvim;}
+      {plugin = markdown-preview-nvim;}
+      {plugin = nvim-treesitter.withAllGrammars;}
       {
         plugin = telescope-nvim;
         type = "lua";
@@ -327,7 +321,7 @@ in
 
   programs.zsh = {
     enable = true;
-    shellAliases = { };
+    shellAliases = {};
     initContent = ''
       if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
@@ -343,7 +337,7 @@ in
     mutableUserSettings = true;
     mutableUserKeymaps = true;
     mutableUserTasks = true;
-    extraPackages = [ pkgs.ripgrep ];
+    extraPackages = [pkgs.ripgrep];
   };
 
   xdg.configFile."nvim/lua/settings.lua".source = ./nvim/lua/settings.lua;
@@ -358,8 +352,7 @@ in
 
   # xdg.configFile."nix/nix.conf".source = ./nix/nix.conf;
 
-  home.packages =
-    with pkgs;
+  home.packages = with pkgs;
     [
       ioskeley-mono.normal
       nix-diff
