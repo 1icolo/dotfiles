@@ -21,6 +21,7 @@
       "ipatool"
     ];
     casks = [
+      "zed"
       "discord"
       "font-ioskeley-mono"
     ];
