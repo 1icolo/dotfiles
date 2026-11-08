@@ -17,6 +17,22 @@
     inherit (pkgs.stdenv.hostPlatform) system;
     config.allowUnfree = true;
   };
+  mkJsTsLanguage = name: {
+    inherit name;
+    auto-format = true;
+    language-servers = [
+      "typescript-language-server"
+      "oxlint"
+      "tailwindcss-ls"
+    ];
+    formatter = {
+      command = lib.getExe pkgs.oxfmt;
+      args = [
+        "--stdin-filepath"
+        "%{buffer_name}"
+      ];
+    };
+  };
 in {
   imports = lib.optionals (!isStandalone) [inputs.direnv-instant.homeModules.direnv-instant];
 
@@ -109,9 +125,12 @@ in {
         alejandra
         rust-analyzer
         rustfmt
+        lldb
         lua-language-server
         tailwindcss-language-server
         typescript-language-server
+        vscode-js-debug
+        vscode-langservers-extracted
         markdown-oxide
         ruff
         terraform-ls
@@ -121,21 +140,23 @@ in {
         yaml-language-server
         bash-language-server
         shellcheck
+        texlab
+        tex-fmt
         # xclip # if you are on X11 instead of Wayland
       ]
       ++ lib.optionals isLinux [
         wl-clipboard
       ];
     languages = {
+      language-server.oxlint = {
+        command = lib.getExe pkgs.oxlint;
+        args = ["--lsp"];
+      };
       language = [
         {
           name = "nix";
-          scope = "source.nix";
           auto-format = true;
-          language-servers = [
-            "nil"
-            "nixd"
-          ];
+          language-servers = ["nixd"];
           formatter.command = lib.getExe pkgs.alejandra;
           roots = [
             "flake.nix"
@@ -143,102 +164,66 @@ in {
           ];
         }
         {
-          name = "rust";
-          scope = "source.rust";
-          auto-format = true;
-          language-servers = ["rust-analyzer"];
-          formatter.command = lib.getExe pkgs.rustfmt;
-          # comment-tokens = "//";
-          # block-comment-tokens = {
-          #   start = "/*";
-          #   end = "*/";
-          # };
-          file-types = ["rs"];
-          # indent = { tab-width = 2, unit = "  " };
-          roots = [
-            "Cargo.toml"
-            "Cargo.lock"
-          ];
-          debugger = {
-            name = "lldb-dap";
-            transport = "stdio";
-            command = "lldb";
-            templates = [
-              {
-                name = "binary";
-                request = "launch";
-                completion = [
-                  {
-                    name = "binary";
-                    completion = "filename";
-                  }
-                ];
-                args = {
-                  program = "{0}";
-                  runInTerminal = true;
-                };
-              }
-            ];
-          };
-        }
-        {
           name = "lua";
-          scope = "source.lua";
           auto-format = true;
-          language-servers = ["lua-language-server"];
           formatter.command = lib.getExe pkgs.stylua;
-          file-types = ["lua"];
         }
         {
           name = "python";
-          scope = "source.python";
           auto-format = true;
           language-servers = ["ruff"];
-          file-types = ["py"];
-          roots = ["pyproject.toml"];
+        }
+        (mkJsTsLanguage "tsx")
+        (mkJsTsLanguage "typescript")
+        (mkJsTsLanguage "jsx")
+        ((mkJsTsLanguage "javascript")
+          // {
+            debugger = {
+              name = "js-debug-dap";
+              transport = "tcp";
+              command = lib.getExe pkgs.vscode-js-debug;
+              port-arg = "{} 127.0.0.1";
+              quirks.absolute-paths = true;
+              templates = [
+                {
+                  name = "source";
+                  request = "launch";
+                  completion = [
+                    {
+                      name = "main";
+                      completion = "filename";
+                      default = "index.js";
+                    }
+                  ];
+                  args = {
+                    program = "{0}";
+                    skipFiles = ["<node_internals>/**"];
+                  };
+                }
+              ];
+            };
+          })
+        {
+          name = "html";
+          language-servers = [
+            "vscode-html-language-server"
+            "tailwindcss-ls"
+          ];
         }
         {
-          name = "typescript";
-          scope = "source.ts";
-          auto-format = true;
-          language-servers = ["typescript-language-server"];
-          file-types = [
-            "ts"
-            "tsx"
-            "js"
-            "jsx"
-          ];
-          roots = [
-            "package.json"
-            "tsconfig.json"
-          ];
-        }
-        {
-          name = "terraform";
-          scope = "source.hcl";
-          language-servers = ["terraform-ls"];
-          file-types = [
-            "tf"
-            "hcl"
-          ];
-        }
-        {
-          name = "tailwindcss";
-          scope = "source.css";
-          language-servers = ["tailwindcss-language-server"];
-          file-types = [
-            "html"
-            "css"
+          name = "css";
+          language-servers = [
+            "vscode-css-language-server"
+            "tailwindcss-ls"
           ];
         }
         {
           name = "markdown";
-          scope = "text.markdown";
           language-servers = ["markdown-oxide"];
-          file-types = [
-            "md"
-            "markdown"
-          ];
+        }
+        {
+          name = "yaml";
+          language-servers = ["yaml-language-server"];
         }
       ];
     };
