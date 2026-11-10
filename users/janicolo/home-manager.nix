@@ -404,6 +404,7 @@ in {
       tldr
       pandoc
       texliveSmall
+      zk
     ]
     ++ lib.optionals isDarwin [
       # Darwin-specific
