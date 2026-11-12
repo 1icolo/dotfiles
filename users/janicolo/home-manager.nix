@@ -155,16 +155,11 @@ in {
         yaml-language-server
         bash-language-server
         shellcheck
-        texlab
-        tex-fmt
-
         tinymist
         typstyle
         typstPackages.touying
         unstable.typstPackages.tableframe
-
         just-lsp
-
         zk # for note-taking
         # xclip # if you are on X11 instead of Wayland
       ]
