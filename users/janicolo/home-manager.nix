@@ -163,6 +163,8 @@ in {
         typstPackages.touying
         unstable.typstPackages.tableframe
 
+        just-lsp
+
         zk # for note-taking
         # xclip # if you are on X11 instead of Wayland
       ]
@@ -194,6 +196,12 @@ in {
           name = "lua";
           auto-format = true;
           formatter.command = lib.getExe pkgs.stylua;
+        }
+        {
+          name = "just";
+          auto-format = true;
+          formatter.command = lib.getExe unstable.just;
+          formatter.args = ["--justfile" "-" "--fmt"];
         }
         {
           name = "python";
