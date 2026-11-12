@@ -142,6 +142,14 @@ in {
         shellcheck
         texlab
         tex-fmt
+
+        typst
+        tinymist
+        typstyle
+        typstPackages.touying
+        unstable.typstPackages.tableframe
+
+        zk # for note-taking
         # xclip # if you are on X11 instead of Wayland
       ]
       ++ lib.optionals isLinux [
@@ -162,6 +170,11 @@ in {
             "flake.nix"
             "flake.lock"
           ];
+        }
+        {
+          name = "typst";
+          auto-format = true;
+          formatter.command = lib.getExe pkgs.typstyle;
         }
         {
           name = "lua";
