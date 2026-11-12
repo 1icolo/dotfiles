@@ -77,6 +77,21 @@ in {
     options = ["--cmd cd"];
   };
 
+  programs.zk = {
+    enable = true;
+    settings = {
+      notebook.dir = "${notesDir}/notes";
+      note = {
+        filename = "{{format-date now '%Y-%m-%d'}}-{{slug title}}";
+      };
+      format.markdown.hashtags = true;
+      format.markdown.frontmatter = {
+        title = true;
+        date = true;
+      };
+    };
+  };
+
   programs.helix = {
     enable = true;
     defaultEditor = true;
