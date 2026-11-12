@@ -47,7 +47,7 @@ in {
     NOTES_DIR = notesDir;
   };
 
-  home.sessionPath = ["$HOME/.local/bin"];
+  home.sessionPath = ["$HOME/.local/bin" "$HOME/.cache/.bun/bin"];
 
   programs.yazi = {
     enable = true;
