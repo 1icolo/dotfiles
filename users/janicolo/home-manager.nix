@@ -158,7 +158,6 @@ in {
         texlab
         tex-fmt
 
-        typst
         tinymist
         typstyle
         typstPackages.touying
@@ -431,7 +430,7 @@ in {
       just
       tldr
       pandoc
-      texliveSmall
+      typst
       zk
     ]
     ++ lib.optionals isDarwin [
