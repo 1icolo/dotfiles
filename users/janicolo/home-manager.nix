@@ -167,6 +167,13 @@ in {
         wl-clipboard
       ];
     languages = {
+      language-server.tinymist = {
+        command = lib.getExe pkgs.tinymist;
+        config = {
+          preview.background.enabled = true;
+          preview.background.args = ["--data-plane-host=127.0.0.1:23635" "--invert-colors=never" "--open"];
+        };
+      };
       language-server.oxlint = {
         command = lib.getExe pkgs.oxlint;
         args = ["--lsp"];
