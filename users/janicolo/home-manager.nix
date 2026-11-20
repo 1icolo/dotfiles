@@ -47,7 +47,7 @@ in {
     NOTES_DIR = notesDir;
   };
 
-  home.sessionPath = ["$HOME/.local/bin"];
+  home.sessionPath = ["$HOME/.local/bin" "$HOME/.cache/.bun/bin"];
 
   programs.yazi = {
     enable = true;
@@ -169,16 +169,11 @@ in {
         yaml-language-server
         bash-language-server
         shellcheck
-        texlab
-        tex-fmt
-
         tinymist
         typstyle
         typstPackages.touying
         unstable.typstPackages.tableframe
-
         just-lsp
-
         zk # for note-taking
         # xclip # if you are on X11 instead of Wayland
       ]
@@ -186,6 +181,13 @@ in {
         wl-clipboard
       ];
     languages = {
+      language-server.tinymist = {
+        command = lib.getExe pkgs.tinymist;
+        config = {
+          preview.background.enabled = true;
+          preview.background.args = ["--data-plane-host=127.0.0.1:23635" "--invert-colors=never" "--open"];
+        };
+      };
       language-server.oxlint = {
         command = lib.getExe pkgs.oxlint;
         args = ["--lsp"];
