@@ -51,12 +51,26 @@ in {
 
   programs.yazi = {
     enable = true;
-    extraPackages = with pkgs; [
-      glow
-      xleak
-    ];
+    extraPackages = with pkgs;
+      [
+        glow
+        xleak
+      ]
+      ++ lib.optionals isWSL [
+        wsl-open
+      ];
+    settings = {
+      opener = {
+        open = lib.optionals isWSL [
+          {
+            run = "wsl-open $@";
+            desc = "Open with Windows";
+            for = "linux";
+          }
+        ];
+      };
+    };
   };
-
   programs.starship = {
     enable = true;
     settings = {
@@ -368,7 +382,10 @@ in {
 
   programs.zsh = {
     enable = true;
-    shellAliases = {};
+    shellAliases =
+      lib.optionalAttrs isWSL {
+        xdg-open = "wsl-open";
+      };
     initContent = ''
       if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
@@ -454,5 +471,12 @@ in {
       # Linux non-WSL
       networkmanager-strongswan
       # Linux non-WSLscope
+    ]
+    ++ lib.optionals isWSL [
+      # WSL: keep wsl-open on PATH for the xdg-open alias
+      wsl-open
+      # WSL: provide a real xdg-open binary so tools that spawn it
+      # directly (yazi, git web browsers, etc.) open files in Windows
+      (writeShellScriptBin "xdg-open" ''exec ${lib.getExe wsl-open} "$@"'')
     ];
 }

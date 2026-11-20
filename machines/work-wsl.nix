@@ -1,5 +1,8 @@
-{ pkgs, currentSystemUser, ... }:
-let
+{
+  pkgs,
+  currentSystemUser,
+  ...
+}: let
   # systemd 260 leaves the user manager's cgroup with subtree controllers
   # enabled after a stop, so the next start fails with
   # "Failed to spawn executor: Device or resource busy" (systemd#41278).
@@ -38,9 +41,8 @@ let
       systemctl restart "''${unit}"
     '';
   };
-in
-{
-  imports = [ ];
+in {
+  imports = [];
 
   wsl = {
     enable = true;
@@ -60,6 +62,10 @@ in
 
   # Zsh as system shell (user login shell is set in users/janicolo/nixos.nix).
   programs.zsh.enable = true;
+
+  environment.systemPackages = [
+    pkgs.wsl-open
+  ];
 
   nix = {
     package = pkgs.nixVersions.latest;
