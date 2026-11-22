@@ -185,7 +185,7 @@ in {
         command = lib.getExe pkgs.tinymist;
         config = {
           preview.background.enabled = true;
-          preview.background.args = ["--data-plane-host=127.0.0.1:23635" "--invert-colors=never" "--open"];
+          # preview.background.args = ["--data-plane-host=127.0.0.1:23635" "--invert-colors=never" "--open"];
         };
       };
       language-server.oxlint = {
@@ -448,6 +448,8 @@ in {
       bun
       uv
       lazygit
+      k9s
+      kubectl
       git-lfs
       unstable.opencode
       fastfetch
@@ -457,7 +459,8 @@ in {
       just
       tldr
       pandoc
-      typst
+      unstable.typst
+      unstable.pi-coding-agent
       zk
     ]
     ++ lib.optionals isDarwin [
