@@ -51,7 +51,7 @@ in {
       "$HOME/.cache/.bun/bin"
     ]
     ++ lib.optionals isDarwin [
-      "/Applications/Rex.app/Contents/Helpers/Rex\ Server.rex/Contents/MacOS/rex"
+      "/Applications/Rex.app/Contents/Helpers/Rex\ Server.rex/Contents/MacOS"
     ];
 
   programs.yazi = {
