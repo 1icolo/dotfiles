@@ -34,8 +34,6 @@
     };
   };
 in {
-  imports = lib.optionals (!isStandalone) [inputs.direnv-instant.homeModules.direnv-instant];
-
   home.stateVersion = "26.05";
   home.enableNixpkgsReleaseCheck = false;
 
@@ -47,7 +45,14 @@ in {
     NOTES_DIR = notesDir;
   };
 
-  home.sessionPath = ["$HOME/.local/bin" "$HOME/.cache/.bun/bin"];
+  home.sessionPath =
+    [
+      "$HOME/.local/bin"
+      "$HOME/.cache/.bun/bin"
+    ]
+    ++ lib.optionals isDarwin [
+      "/Applications/Rex.app/Contents/Helpers/Rex\ Server.rex/Contents/MacOS/rex"
+    ];
 
   programs.yazi = {
     enable = true;
@@ -108,6 +113,7 @@ in {
 
   programs.helix = {
     enable = true;
+    package = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default;
     defaultEditor = true;
     settings = {
       theme = "base16_transparent";
@@ -175,6 +181,13 @@ in {
         unstable.typstPackages.tableframe
         just-lsp
         zk # for note-taking
+
+        go
+        gopls
+        delve
+        golangci-lint
+        golangci-lint-langserver
+        gotools # goimports
         # xclip # if you are on X11 instead of Wayland
       ]
       ++ lib.optionals isLinux [
@@ -191,6 +204,17 @@ in {
       language-server.oxlint = {
         command = lib.getExe pkgs.oxlint;
         args = ["--lsp"];
+      };
+      language-server.gopls.command = lib.getExe pkgs.gopls;
+      language-server.golangci-lint-lsp = {
+        command = lib.getExe pkgs.golangci-lint-langserver;
+        config.command = [
+          (lib.getExe pkgs.golangci-lint)
+          "run"
+          "--output.json.path=stdout"
+          "--show-stats=false"
+          "--issues-exit-code=1"
+        ];
       };
       language = [
         {
@@ -223,6 +247,22 @@ in {
           name = "python";
           auto-format = true;
           language-servers = ["ruff"];
+        }
+        {
+          name = "go";
+          auto-format = true;
+          language-servers = ["gopls" "golangci-lint-lsp"];
+          formatter.command = lib.getExe' pkgs.gotools "goimports";
+          roots = ["go.work" "go.mod"];
+        }
+        {
+          name = "gomod";
+          auto-format = true;
+          language-servers = ["gopls"];
+        }
+        {
+          name = "gotmpl";
+          language-servers = ["gopls"];
         }
         (mkJsTsLanguage "tsx")
         (mkJsTsLanguage "typescript")
@@ -384,10 +424,9 @@ in {
 
   programs.zsh = {
     enable = true;
-    shellAliases =
-      lib.optionalAttrs isWSL {
-        xdg-open = "wsl-open";
-      };
+    shellAliases = lib.optionalAttrs isWSL {
+      xdg-open = "wsl-open";
+    };
     initContent = ''
       if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
@@ -437,6 +476,7 @@ in {
       podman
       rustc
       cargo
+      go
       unrar
       dos2unix
       glow

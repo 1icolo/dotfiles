@@ -5,12 +5,13 @@
   currentSystemName,
   isWSL,
   ...
-}:
-{
+}: {
   homebrew = {
     enable = true;
-    casks  = [];
-    brews = [];
+    casks = [];
+    brews = [
+      "graiz/tap/kittybrowser"
+    ];
   };
   system.stateVersion = 7;
   system.defaults.dock = {
