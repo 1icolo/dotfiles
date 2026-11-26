@@ -121,6 +121,10 @@ in {
       editor = {
         default-yank-register = "+";
         line-number = "relative";
+        soft-wrap = {
+          enable = true;
+          wrap-indicator = "\t";
+        };
       };
       editor.cursor-shape = {
         normal = "block";
