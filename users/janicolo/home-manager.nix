@@ -480,6 +480,7 @@ in {
       rustc
       cargo
       go
+      gcc
       unrar
       dos2unix
       glow
