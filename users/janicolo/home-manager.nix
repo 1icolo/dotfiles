@@ -49,6 +49,7 @@ in {
     [
       "$HOME/.local/bin"
       "$HOME/.cache/.bun/bin"
+      "$HOME/.cargo/bin"
     ]
     ++ lib.optionals isDarwin [
       "/Applications/Rex.app/Contents/Helpers/Rex\ Server.rex/Contents/MacOS"
