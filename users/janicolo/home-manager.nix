@@ -248,6 +248,8 @@ in {
           name = "python";
           auto-format = true;
           language-servers = ["ruff"];
+          formatter.command = lib.getExe pkgs.ruff;
+          formatter.args = ["format" "-"];
         }
         {
           name = "go";
