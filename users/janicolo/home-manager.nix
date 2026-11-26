@@ -506,6 +506,7 @@ in {
       unstable.typst
       unstable.pi-coding-agent
       zk
+      grok-cli
     ]
     ++ lib.optionals isDarwin [
       # Darwin-specific
