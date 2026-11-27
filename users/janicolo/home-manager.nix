@@ -221,6 +221,10 @@ in {
           "--issues-exit-code=1"
         ];
       };
+      language-server.python-ruff = {
+        command = lib.getExe pkgs.ruff;
+        args = ["server"];
+      };
       language = [
         {
           name = "nix";
@@ -251,7 +255,7 @@ in {
         {
           name = "python";
           auto-format = true;
-          language-servers = ["ruff"];
+          language-servers = ["python-ruff"];
           formatter.command = lib.getExe pkgs.ruff;
           formatter.args = ["format" "-"];
         }
